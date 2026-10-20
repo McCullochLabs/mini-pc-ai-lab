@@ -1,0 +1,10 @@
+{
+  "model": "qwen2.5:3b",
+  "context_length": 1024,
+  "num_predict": 32,
+  "seed": 42,
+  "concurrency": [1],
+  "repeats": 1,
+  "timeout_seconds": 20,
+  "workloads": ["defect_review"]
+}

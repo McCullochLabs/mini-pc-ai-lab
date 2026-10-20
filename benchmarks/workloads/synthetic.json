@@ -1,0 +1,12 @@
+{
+  "defect_review": {
+    "category": "coding / defect detection",
+    "prompt": "Review this synthetic Python eligibility function. Line 1: def eligible(x): Line 2: return x > 18. Specification: age 18 or older is eligible. Return only JSON with exactly defect_line (integer line number) and fix (the corrected expression as a string). Do not return code fences.",
+    "expected": {"defect_line": 2, "fix": "x >= 18"}
+  },
+  "structured_qa": {
+    "category": "structured content / document QA",
+    "prompt": "Check synthetic publication rows. A valid row has a nonempty title and a positive integer pages. Rows: A title=Sample pages=12; B title='' pages=8; C title=Example pages=0. Return only JSON with exactly invalid_ids (IDs in input order) and valid_count (integer).",
+    "expected": {"invalid_ids": ["B", "C"], "valid_count": 1}
+  }
+}

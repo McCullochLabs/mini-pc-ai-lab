@@ -1,0 +1,80 @@
+{
+  "observation_schema_version": 1,
+  "record_type": "host_readiness_observation_not_inference_benchmark",
+  "date_local": "2026-10-20",
+  "timezone": "America/Phoenix",
+  "hardware": {
+    "manufacturer": "HP",
+    "system_family": "HP Pavilion Laptop 15-cs0xxx",
+    "cpu": {
+      "Name": "Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz",
+      "NumberOfCores": 4,
+      "NumberOfLogicalProcessors": 8
+    },
+    "physical_memory_bytes": 17043787776,
+    "gpu_name": "Intel(R) UHD Graphics 620",
+    "gpu_memory": null,
+    "os": {
+      "Caption": "Microsoft Windows 11 Home",
+      "Version": "10.0.26300",
+      "BuildNumber": "26300"
+    }
+  },
+  "readiness_samples": [
+    {
+      "observed_utc": "2026-10-20T13:11:09.6565208Z",
+      "total_visible_kib": 16644324,
+      "free_physical_kib": 951200,
+      "cpu_percent": 33,
+      "free_physical_gib": 0.907135,
+      "physical_used_percent_proxy": 94.2851
+    },
+    {
+      "observed_utc": "2026-10-20T13:11:11.1052099Z",
+      "total_visible_kib": 16644324,
+      "free_physical_kib": 888056,
+      "cpu_percent": 44,
+      "free_physical_gib": 0.846916,
+      "physical_used_percent_proxy": 94.6645
+    },
+    {
+      "observed_utc": "2026-10-20T13:11:12.5295534Z",
+      "total_visible_kib": 16644324,
+      "free_physical_kib": 937668,
+      "cpu_percent": 17,
+      "free_physical_gib": 0.89423,
+      "physical_used_percent_proxy": 94.3664
+    }
+  ],
+  "ollama": {
+    "installed_client_version": "0.40.6",
+    "default_local_server_reachable": false,
+    "server_version": null,
+    "model_file_observations": [
+      {
+        "model": "llama3.2:3b",
+        "all_referenced_files_present_and_size_matched": true,
+        "referenced_file_count": 7,
+        "content_hash_verified": false,
+        "runtime_acceptance_verified": false
+      },
+      {
+        "model": "qwen2.5:3b",
+        "all_referenced_files_present_and_size_matched": true,
+        "referenced_file_count": 6,
+        "content_hash_verified": false,
+        "runtime_acceptance_verified": false
+      }
+    ]
+  },
+  "decision": "defer_inference_memory_pressure_and_service_unavailable",
+  "inference_requests_submitted": 0,
+  "inference_metrics": null,
+  "limitations": [
+    "Three readiness snapshots during active background work, not idle or load-test statistics.",
+    "Physical-used proxy is total visible minus free; not process memory, commit, peak RAM or reclaimable capacity.",
+    "Windows performance counter CPU values are brief provider readings, not a sustained utilization study.",
+    "Installed client and model files do not prove a usable server, model or backend.",
+    "No power, thermal, GPU memory, GPU utilization or token performance measured."
+  ]
+}
