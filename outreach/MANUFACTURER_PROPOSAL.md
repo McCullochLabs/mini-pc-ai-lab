@@ -2,7 +2,7 @@
 
 **Testing affordable hardware for real-world local AI development.**
 
-Project: [github.com/jordansess69/mini-pc-ai-lab](https://github.com/jordansess69/mini-pc-ai-lab).
+Project: [github.com/McCullochLabs/mini-pc-ai-lab](https://github.com/McCullochLabs/mini-pc-ai-lab).
 
 Mini PC AI Lab is a new independent initiative developing reproducible evaluations of affordable computers for local AI development. It is not an established hardware publication. There are no audience, sponsorship, or measured performance claims in this proposal.
 
