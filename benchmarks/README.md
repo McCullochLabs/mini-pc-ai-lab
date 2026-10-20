@@ -1,31 +1,87 @@
-# Benchmark toolkit
+# Operating the benchmark toolkit
 
-Requires Python 3.10+; no third-party package, dashboard, installer or model downloader. Run from the repository root:
+Requires Python **3.10+**. Safe fixtures use only its standard library. Real inference needs an already installed local Ollama runtime/model and sufficient memory. No software, model or permanent service is installed automatically.
+
+## Windows PowerShell quick start
+
+Run from the checkout:
 
 ```powershell
-python -m unittest discover -s tests -v
-python scripts/lab.py check
+python scripts/lab.py --version
+python scripts/lab.py check --probe-server
+python scripts/lab.py models
 python scripts/lab.py inventory --output .local/inventory.json
-python scripts/lab.py run --fixture --output benchmarks/results/fixture-example.json
-python scripts/lab.py validate benchmarks/results/fixture-example.json
-python scripts/lab.py report benchmarks/results/fixture-example.json --output benchmarks/results/fixture-example.md
+python scripts/lab.py run --fixture --output .local/fixture.json
+python scripts/lab.py validate .local/fixture.json
+python scripts/lab.py report .local/fixture.json --output .local/fixture.md
 ```
 
-Fixture runs do not contact Ollama. Their numbers are invented software fixtures, never hardware evidence. Inventory does not run inference and intentionally excludes hostnames, serials, UUIDs, usernames, addresses, paths and process lists. Windows CIM selects only processor name/core counts, system manufacturer/model/RAM, graphics name/advertised AdapterRAM, and OS version/build. AdapterRAM can be inaccurate, especially on integrated graphics, and is not usable GPU memory. Review inventory before public disclosure. Failed collection retains no raw errors.
+`check` without `--probe-server` makes no service request. `models` lists metadata, never pulls a model. Installed and reachable are separate states. Windows memory/CPU collection uses non-admin interfaces and bounded allowlisted CIM; a restricted execution environment can deny fields without implying ordinary use requires administrator rights.
 
-`check --probe-server` explicitly performs a read-only local API version query. Other checks only inspect the Python version and whether the Ollama executable is discoverable; no service is started.
+## Linux shell
 
-For a future authorized smoke run, edit `benchmarks/configurations/smoke.json` to an exact installed model name, close other heavy applications, and explicitly opt in:
+Use the same commands with `python3`:
+
+```sh
+python3 scripts/lab.py check --probe-server
+python3 scripts/lab.py models
+python3 scripts/lab.py run --fixture --output .local/fixture.json
+python3 scripts/lab.py report .local/fixture.json --output .local/fixture.md
+```
+
+Linux uses `/proc` for CPU/RAM and available `lspci` or limited DRM fields for GPU identity. Optional NVIDIA counters require an existing `nvidia-smi`. Missing fields remain unavailable. Other platforms can use fixtures; real inference fails closed without reliable RAM data.
+
+## Safe first real trial
+
+Let other work finish; do not kill applications to make a benchmark fit. Start the existing local Ollama application normally and confirm a suitable installed model is listed. Substitute its exact name below, or use `--model auto` for the smallest installed candidate passing the resource guard:
 
 ```powershell
-python scripts/lab.py run --config benchmarks/configurations/smoke.json --allow-inference --output .local/smoke.json
+python scripts/lab.py run --config benchmarks/configurations/first-baseline.json --model qwen2.5:3b --allow-inference --output .local/first.json
+python scripts/lab.py validate .local/first.json
+python scripts/lab.py report .local/first.json --output .local/first.md
 ```
 
-Do not run this command during initial setup without owner authorization. The flag is a technical guard, not a substitute for authorization. No real inference was run to prepare this foundation. The concurrency configuration supports 1/2/4 simultaneous clients; it is a separate, heavier proposal requiring approval. It makes 14 requests with two workloads and one repeat. Maximum accepted settings are 3 repeats, 512 output tokens, 8192 context tokens, 120 seconds per request, and four clients. These are safety bounds, not guaranteed low resource use. A request can occupy a socket read for up to the socket timeout beyond the wall-clock check; server work may continue after client disconnect. There is no background stress runner.
+This requests one narrow review task, one client, context 1,024, output cap 32 and a 20-second request timeout. CPU threads default to 2. Treat it as a smoke observation, not a statistical comparison. Quality failure remains separate from transport success and token speed.
 
-Only loopback HTTP endpoints are accepted; credentials, nonlocal addresses and environment proxies are rejected/bypassed. No endpoint is stored in results. No generated text, thinking output, raw server errors or private prompts are saved. The bundled prompts are synthetic and public. Redirects are disabled. Model metadata comes from `/api/tags`, including digest and quantization where available; this does not prove CPU/GPU placement. All results need an accompanying reviewed environment record.
+`--threads`, `--warmups`, `--repeats` and `--run-budget` override settings without editing several files. More clients, repetitions, warm-ups and larger budgets require an additional deliberate `--allow-heavy` opt-in. It does not bypass RAM checks. Use it only with an authorized resource budget. Admission is conservative, not an OOM guarantee. Severe/unknown memory availability stops further batch dispatch; unrelated processes are untouched.
 
-Quality grading accepts exact JSON objects for a deliberately small defect-review and structured QA task. It never executes model-generated code. This is a narrow regression workload, not a general coding ability score; feature implementation, test generation, repair loops, Android builds, document rendering and image/video generation remain proposed extensions.
+The run budget stops new batches; in-flight calls drain and may exceed it by transport/socket delay. Server work may continue after disconnect. No automatic retry/stress loop or shared-model unload is performed.
 
-Results record individual errors, batch duration, per-request output-fragment TTFT and server metrics. All-failed batches remain valid observations with zero successful throughput; inspect reliability before drawing speed conclusions. CLI validation returns nonzero on invalid inputs. Report generation validates first. See [methodology](../BENCHMARK_METHODOLOGY.md) and [results template](../RESULTS_TEMPLATE.md).
+## Coding and concurrent traffic
 
+```powershell
+python scripts/lab.py run --fixture --config benchmarks/configurations/coding.json --output .local/coding.json
+python scripts/lab.py run --fixture --config benchmarks/configurations/concurrency.json --output .local/concurrency.json
+```
+
+The five coding categories are feature implementation, bug correction, test generation, review and refactoring. Graders inspect bounded JSON/AST contracts; **generated code is never executed**. Passing verifies specified structure, not general dynamic correctness; equivalent correct solutions may fail. Trusted fixture answers are synthetic, never measured model quality.
+
+Real suites require `--allow-inference`, a listed model and, where settings require it, `--allow-heavy`. One/two/four clients share one model. They do not establish independent agents, several model instances, full OpenCode orchestration or server parallelism. Client dispatch delay is not server queue time.
+
+## Reports, comparison and review
+
+```powershell
+python scripts/lab.py compare .local/system-a.json .local/system-b.json --output .local/comparison.json
+```
+
+Comparison requires completed measured v2 runs and matching configuration, model/quantization, backend/tool version, prompt digest and placement category. Hardware/conditions still need human interpretation. No universal score is created.
+
+Results include run IDs, completion/error status, provenance, resource sources and disclosure. Checkpoints retain completed batches on interruption; a partial run is not successful. Reports validate first. Sponsorship defaults to unknown/not supplied; `--sponsorship` supplies an operator-reviewed truthful disclosure.
+
+Review JSON/report/device/model names and disclosure before publication. Nothing uploads automatically. Routine records exclude generated text/code, private endpoints, raw server errors, usernames, serials and process lists. Custom metadata may still need sanitization. See [format/interpretation](RESULT_FORMAT.md), [methodology](../BENCHMARK_METHODOLOGY.md) and [release gates](../docs/V1_RELEASE.md).
+
+## Troubleshooting
+
+| Condition | Action |
+|---|---|
+| CLI absent | Use fixtures; arrange installation separately |
+| Installed but unreachable | Open the existing local application/service; check port/permissions; do not download models as a connectivity fix |
+| Model absent | Choose an exact listed name or stop; no pull occurs |
+| RAM unknown / no model fits | Wait for memory headroom or use another system; do not bypass the guard or kill unrelated work |
+| Heavy settings refused | Reduce settings or explicitly authorize the larger budget |
+| Truncated/invalid JSON or failed static grade | Retain failure; inspect contract/output cap; transport success is not task success |
+| Missing sensor/GPU field | Keep unavailable; support differs by platform/driver |
+| Interrupted/budget exhausted | Retain status and completed batches; use a new run for a repeat |
+| Comparison refused | Resolve incompatibility rather than treating runs as equivalent |
+
+Safe tests: `python -m unittest discover -s tests -v`. Local mock sockets must be permitted. Mock platform tests do not certify real Linux/AMD/NVIDIA hardware.

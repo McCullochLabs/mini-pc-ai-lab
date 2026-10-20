@@ -1,0 +1,373 @@
+{
+  "schema_version": 2,
+  "toolkit_version": "1.0.0",
+  "run_id": "56e7a749-dc94-4f42-9ca0-93cd6b8d701f",
+  "created_utc": "2026-10-20T14:06:46.514847+00:00",
+  "completed_utc": "2026-10-20T14:07:01.215665+00:00",
+  "mode": "measured",
+  "status": "completed",
+  "config": {
+    "model": "qwen2.5:3b",
+    "context_length": 1024,
+    "num_predict": 32,
+    "seed": 42,
+    "concurrency": [
+      1
+    ],
+    "repeats": 1,
+    "timeout_seconds": 20,
+    "workloads": [
+      "defect_review"
+    ],
+    "warmups": 0,
+    "run_budget_seconds": 25,
+    "threads": 2
+  },
+  "hardware_id": "4bf850ebceb67d337abaf1cbb4389bde39637b97e37b0c4e4a0cf4c45ca71794",
+  "hardware": {
+    "os": "Windows",
+    "os_release": "11",
+    "architecture": "AMD64",
+    "python": "3.13.15",
+    "cpu_model": "Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz",
+    "logical_cpus": 8,
+    "total_ram_bytes": 17043787776,
+    "available_ram_bytes": 6844280832,
+    "gpus": [
+      {
+        "name": "Intel(R) UHD Graphics 620",
+        "vendor": "Intel",
+        "dedicated_memory_bytes": null,
+        "source": "CIM Win32_VideoController.Name"
+      }
+    ],
+    "warnings": [],
+    "sources": {
+      "ram": "GlobalMemoryStatusEx",
+      "cpu_model": "CIM Win32_Processor.Name",
+      "collector_version": "1"
+    },
+    "fingerprint": "acd32afcbda8974b2f632d187ef5e403957dfaadf6aa9ca1d4eac6261d425793"
+  },
+  "model_metadata": {
+    "name": "qwen2.5:3b",
+    "digest": "357c53fb659c5076de1d65ccb0b397446227b71a42be9d1603d46168015c9e4b",
+    "size": 1929912432,
+    "details": {
+      "format": "gguf",
+      "family": "qwen2",
+      "parameter_size": "3.1B",
+      "quantization_level": "Q4_K_M"
+    }
+  },
+  "ollama_version": "0.40.6",
+  "capacity_guard": {
+    "source": "conservative-file-size-heuristic-v1",
+    "model_size_bytes": 1929912432,
+    "required_available_bytes": 6544179424,
+    "available_ram_bytes": 6844280832,
+    "allow_heavy": false,
+    "warning": "not a guarantee against OOM; GPU placement and KV cache vary"
+  },
+  "workload_digest": "78744e584c79abe75367c65e9361ea3f11d3f959ba23ec90d1b105de2febfdc2",
+  "batches": [
+    {
+      "phase": "measured",
+      "concurrency": 1,
+      "repeat": 0,
+      "workload": "defect_review",
+      "wall_seconds": 14.634650100022554,
+      "aggregate_output_tokens_per_second": 1.6399435474007686,
+      "requests": [
+        {
+          "workload": "defect_review",
+          "status": "ok",
+          "wall_seconds": 14.6232998999767,
+          "ttft_seconds": 11.879344500019215,
+          "metrics": {
+            "total_duration": 14558508600,
+            "load_duration": 8460269000,
+            "prompt_eval_count": 94,
+            "prompt_eval_duration": 3338123000,
+            "eval_count": 24,
+            "eval_duration": 2741147000,
+            "prompt_eval_cached_count": 0,
+            "generation_tokens_per_second": 8.7554589374448,
+            "prompt_tokens_per_second": 28.159537560479347
+          },
+          "quality": {
+            "passed": false,
+            "grader": "exact-json-v1"
+          },
+          "request_id": "8d6cc9a1-9ba2-468f-8e0d-9267ed4daba5",
+          "client_index": 0,
+          "client_dispatch_delay_seconds": 0.010606000025290996
+        }
+      ]
+    }
+  ],
+  "warmups": [],
+  "warnings": [
+    "TTFT is first nonempty output fragment, not exact token timing.",
+    "Client dispatch delay is not server queue time.",
+    "Timeout is per blocking read with an elapsed guard; in-flight requests are drained before exit.",
+    "Power, thermals, server queue time and autonomous agent coordination are unmeasured."
+  ],
+  "disclosure": {
+    "hardware_sponsorship": "Existing development laptop; acquisition/sponsorship terms not independently verified."
+  },
+  "resources": {
+    "sampling_interval_seconds": 0.5,
+    "scope": "local_system",
+    "clock": "monotonic elapsed seconds",
+    "sample_count": 28,
+    "samples": [
+      {
+        "elapsed_seconds": 0.0006774999783374369,
+        "total_ram_bytes": 17043787776,
+        "available_ram_bytes": 6889725952,
+        "system_used_ram_bytes": 10154061824,
+        "system_cpu_percent": null,
+        "nvidia_gpus": []
+      },
+      {
+        "elapsed_seconds": 0.5906729999696836,
+        "total_ram_bytes": 17043787776,
+        "available_ram_bytes": 6831861760,
+        "system_used_ram_bytes": 10211926016,
+        "system_cpu_percent": 26.31578947368421,
+        "nvidia_gpus": []
+      },
+      {
+        "elapsed_seconds": 1.125883899978362,
+        "total_ram_bytes": 17043787776,
+        "available_ram_bytes": 6817808384,
+        "system_used_ram_bytes": 10225979392,
+        "system_cpu_percent": 27.941176470588236,
+        "nvidia_gpus": []
+      },
+      {
+        "elapsed_seconds": 1.6592282999772578,
+        "total_ram_bytes": 17043787776,
+        "available_ram_bytes": 6707474432,
+        "system_used_ram_bytes": 10336313344,
+        "system_cpu_percent": 14.338235294117647,
+        "nvidia_gpus": []
+      },
+      {
+        "elapsed_seconds": 2.191997999965679,
+        "total_ram_bytes": 17043787776,
+        "available_ram_bytes": 6541479936,
+        "system_used_ram_bytes": 10502307840,
+        "system_cpu_percent": 19.852941176470587,
+        "nvidia_gpus": []
+      },
+      {
+        "elapsed_seconds": 2.7233368000015616,
+        "total_ram_bytes": 17043787776,
+        "available_ram_bytes": 6390837248,
+        "system_used_ram_bytes": 10652950528,
+        "system_cpu_percent": 18.014705882352942,
+        "nvidia_gpus": []
+      },
+      {
+        "elapsed_seconds": 3.2601668999996036,
+        "total_ram_bytes": 17043787776,
+        "available_ram_bytes": 6250364928,
+        "system_used_ram_bytes": 10793422848,
+        "system_cpu_percent": 15.714285714285714,
+        "nvidia_gpus": []
+      },
+      {
+        "elapsed_seconds": 3.793683499970939,
+        "total_ram_bytes": 17043787776,
+        "available_ram_bytes": 6097453056,
+        "system_used_ram_bytes": 10946334720,
+        "system_cpu_percent": 12.132352941176471,
+        "nvidia_gpus": []
+      },
+      {
+        "elapsed_seconds": 4.328978399978951,
+        "total_ram_bytes": 17043787776,
+        "available_ram_bytes": 5955129344,
+        "system_used_ram_bytes": 11088658432,
+        "system_cpu_percent": 12.222222222222221,
+        "nvidia_gpus": []
+      },
+      {
+        "elapsed_seconds": 4.864437500014901,
+        "total_ram_bytes": 17043787776,
+        "available_ram_bytes": 5814837248,
+        "system_used_ram_bytes": 11228950528,
+        "system_cpu_percent": 13.138686131386862,
+        "nvidia_gpus": []
+      },
+      {
+        "elapsed_seconds": 5.396483999968041,
+        "total_ram_bytes": 17043787776,
+        "available_ram_bytes": 5670903808,
+        "system_used_ram_bytes": 11372883968,
+        "system_cpu_percent": 13.235294117647058,
+        "nvidia_gpus": []
+      },
+      {
+        "elapsed_seconds": 5.926749199978076,
+        "total_ram_bytes": 17043787776,
+        "available_ram_bytes": 5506207744,
+        "system_used_ram_bytes": 11537580032,
+        "system_cpu_percent": 13.602941176470589,
+        "nvidia_gpus": []
+      },
+      {
+        "elapsed_seconds": 6.456655699992552,
+        "total_ram_bytes": 17043787776,
+        "available_ram_bytes": 5280636928,
+        "system_used_ram_bytes": 11763150848,
+        "system_cpu_percent": 11.029411764705882,
+        "nvidia_gpus": []
+      },
+      {
+        "elapsed_seconds": 6.986374599975534,
+        "total_ram_bytes": 17043787776,
+        "available_ram_bytes": 5119541248,
+        "system_used_ram_bytes": 11924246528,
+        "system_cpu_percent": 11.764705882352942,
+        "nvidia_gpus": []
+      },
+      {
+        "elapsed_seconds": 7.517189499980304,
+        "total_ram_bytes": 17043787776,
+        "available_ram_bytes": 4969279488,
+        "system_used_ram_bytes": 12074508288,
+        "system_cpu_percent": 8.088235294117647,
+        "nvidia_gpus": []
+      },
+      {
+        "elapsed_seconds": 8.052639900008217,
+        "total_ram_bytes": 17043787776,
+        "available_ram_bytes": 4848984064,
+        "system_used_ram_bytes": 12194803712,
+        "system_cpu_percent": 30.88235294117647,
+        "nvidia_gpus": []
+      },
+      {
+        "elapsed_seconds": 8.58815989998402,
+        "total_ram_bytes": 17043787776,
+        "available_ram_bytes": 4873408512,
+        "system_used_ram_bytes": 12170379264,
+        "system_cpu_percent": 37.5,
+        "nvidia_gpus": []
+      },
+      {
+        "elapsed_seconds": 9.141486599983182,
+        "total_ram_bytes": 17043787776,
+        "available_ram_bytes": 4862169088,
+        "system_used_ram_bytes": 12181618688,
+        "system_cpu_percent": 43.92857142857143,
+        "nvidia_gpus": []
+      },
+      {
+        "elapsed_seconds": 9.679018699971493,
+        "total_ram_bytes": 17043787776,
+        "available_ram_bytes": 4866895872,
+        "system_used_ram_bytes": 12176891904,
+        "system_cpu_percent": 46.07142857142857,
+        "nvidia_gpus": []
+      },
+      {
+        "elapsed_seconds": 10.220051699958276,
+        "total_ram_bytes": 17043787776,
+        "available_ram_bytes": 4859809792,
+        "system_used_ram_bytes": 12183977984,
+        "system_cpu_percent": 42.64705882352941,
+        "nvidia_gpus": []
+      },
+      {
+        "elapsed_seconds": 10.75980180001352,
+        "total_ram_bytes": 17043787776,
+        "available_ram_bytes": 4860289024,
+        "system_used_ram_bytes": 12183498752,
+        "system_cpu_percent": 48.92857142857143,
+        "nvidia_gpus": []
+      },
+      {
+        "elapsed_seconds": 11.299308399960864,
+        "total_ram_bytes": 17043787776,
+        "available_ram_bytes": 4852068352,
+        "system_used_ram_bytes": 12191719424,
+        "system_cpu_percent": 42.64705882352941,
+        "nvidia_gpus": []
+      },
+      {
+        "elapsed_seconds": 11.83999369997764,
+        "total_ram_bytes": 17043787776,
+        "available_ram_bytes": 4852695040,
+        "system_used_ram_bytes": 12191092736,
+        "system_cpu_percent": 43.214285714285715,
+        "nvidia_gpus": []
+      },
+      {
+        "elapsed_seconds": 12.378853200003505,
+        "total_ram_bytes": 17043787776,
+        "available_ram_bytes": 4850159616,
+        "system_used_ram_bytes": 12193628160,
+        "system_cpu_percent": 47.794117647058826,
+        "nvidia_gpus": []
+      },
+      {
+        "elapsed_seconds": 12.91750390001107,
+        "total_ram_bytes": 17043787776,
+        "available_ram_bytes": 4851150848,
+        "system_used_ram_bytes": 12192636928,
+        "system_cpu_percent": 45.714285714285715,
+        "nvidia_gpus": []
+      },
+      {
+        "elapsed_seconds": 13.455564400006551,
+        "total_ram_bytes": 17043787776,
+        "available_ram_bytes": 4857040896,
+        "system_used_ram_bytes": 12186746880,
+        "system_cpu_percent": 41.1764705882353,
+        "nvidia_gpus": []
+      },
+      {
+        "elapsed_seconds": 13.993538599985186,
+        "total_ram_bytes": 17043787776,
+        "available_ram_bytes": 4856197120,
+        "system_used_ram_bytes": 12187590656,
+        "system_cpu_percent": 46.42857142857143,
+        "nvidia_gpus": []
+      },
+      {
+        "elapsed_seconds": 14.530501900007948,
+        "total_ram_bytes": 17043787776,
+        "available_ram_bytes": 4849057792,
+        "system_used_ram_bytes": 12194729984,
+        "system_cpu_percent": 42.279411764705884,
+        "nvidia_gpus": []
+      }
+    ],
+    "peak_system_used_ram_bytes": 12194803712,
+    "min_available_ram_bytes": 4848984064,
+    "mean_system_cpu_percent": 28.76308031168624,
+    "peak_nvidia_memory_used_bytes": null,
+    "sources": {
+      "ram": "GlobalMemoryStatusEx",
+      "cpu": "GetSystemTimes delta",
+      "gpu": "nvidia-smi when available",
+      "collector_version": "1"
+    },
+    "warnings": [
+      "System-wide sampled values; not process or model allocation. Peaks may miss short spikes."
+    ],
+    "thermals": null,
+    "power": null
+  },
+  "backend": {
+    "source": "ollama-api-ps",
+    "placement": "cpu-reported",
+    "size_vram_bytes": 0,
+    "reported_size_bytes": 2051979344,
+    "note": "residency report does not prove utilization or identify iGPU versus dGPU"
+  }
+}

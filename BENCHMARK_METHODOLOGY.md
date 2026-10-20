@@ -1,31 +1,52 @@
-# Benchmark methodology v1
+# Benchmark methodology v1.0
 
-Status: implemented synthetic workloads and fixture-tested local Ollama client; **no hardware inference results yet**. Fixture artifacts are prominently marked and excluded from comparisons.
+**Detect â†’ Configure â†’ Validate â†’ Benchmark â†’ Record â†’ Report.** Original fixtures isolate this work from private projects. Transport success, task correctness and speed are separate outcomes.
 
-Record each system's CPU, memory capacity/type/channels, GPU and usable dedicated/shared memory, OS build, BIOS/power mode, driver versions, Ollama version, exact model name/digest, quantization, prompt version, context/output limits and seed. Document ambient temperature, AC/battery state, background work and cooling. Inventory is allowlisted and may be incomplete; unknown means unknown. An advertised NPU TOPS value does not establish Ollama support or inference performance. Check backend placement independently before describing a run as CPU, iGPU or dedicated GPU inference.
+## Environment, admission and stopping
 
-## Implemented protocol
+Collect allowlisted OS/CPU/RAM/GPU/software details without usernames, hostnames, serials, network identifiers or process lists. Hardware ID hashes selected specifications; it is not a serial or unique physical asset identity. Missing observations remain unavailable.
 
-1. Obtain authorization for the bounded run; use the smallest installed suitable model. Never auto-install or pull a model.
-2. Run read-only checks and inventory; review the data. Copy the smoke configuration, set the exact installed name, and retain the configuration with results.
-3. Run two synthetic workloads at concurrency 1. No hidden warm-up is performed. The first request may load the model; subsequent requests may be warm. Label this mixed state explicitly. For publication, run separately labeled cold and warm sessions with documented cache state; the toolkit does not force unload or flush caches.
-4. If separately approved, use concurrency 1, 2 and 4. Each batch launches that many requests to **one model**; successive workloads/repeats run in sequence. Record all failures; do not drop slow or failed requests.
-5. Validate JSON, generate Markdown, attach the reviewed environment and manual readings, then review the publication checklist. Do not compare fixture data with measured systems.
+Detect installation, service reachability, model availability and backend residency separately. Never pull models or start services automatically. Preserve exact model digest/quantization, runtime version, context/output limits, seed, thread count, configuration and prompt digest.
 
-## Metrics and interpretation
+RAM admission uses a conservative model-file-size/context/reserve estimate. It is an **estimate**, not measured allocation or an OOM guarantee, and may reject a model that could fit through offload/residency. Unknown/insufficient RAM fails closed. Severe/unknown availability stops new batches; existing unrelated processes are never terminated. Larger contexts/outputs, repeats, warm-ups, more clients and extended budgets need deliberate heavier-run opt-in.
 
-Client wall time uses a monotonic performance clock. TTFT is elapsed client time until the first nonempty `response` fragment, including connection, queue, model loading and transport. It is an output-fragment proxy; thinking output is ignored. No fragment yields null. It is not exact tokenizer-level first-token timing.
+Warm-up batches are recorded separately and excluded from measured tables. No forced cache flush/unload occurs; zero warm-ups does not prove a cold start. Use at least three measured repetitions for later controlled comparisons and document power mode, AC state, ambient conditions and background work. Tiny samples do not support stable percentiles or significance claims.
 
-The final Ollama streaming object supplies nanosecond total/load/evaluation durations and token counts. Generation throughput is `eval_count * 1e9 / eval_duration`. Prompt throughput uses `(prompt_eval_count - prompt_eval_cached_count) * 1e9 / prompt_eval_duration`; absent cached count defaults to zero and should be treated cautiously across versions. Zero durations yield null throughput. Client batch throughput is total output tokens from successful requests divided by batch wall seconds; it includes queue/connection time and pool startup. Do not sum individual generation rates to claim aggregate serving speed. Per-request JSON is the primary evidence; the report is a compact summary.
+Socket timeouts include an elapsed guard; they are not exact server deadlines. The run budget stops new dispatch and drains in-flight requests. Interruption/error/budget status and completed batches are checkpointed locally. No background stress runner or hidden retry loop exists. A disconnected server can continue work.
 
-Concurrent API clients simulate simultaneous inference demand. They do not implement agent delegation, task orchestration, long-running repair loops or multiple independent models. Server parallelism and queue time are not separately measured; elapsed latency alone does not isolate them. Repeat count is bounded at three; tiny smoke samples are unsuitable for stable percentile claims. Disclose order, sample count and failure count; do not claim statistical significance.
+## Measurement sources
 
-Task correctness is separate from speed. The exact JSON graders test a known one-line defect and three synthetic QA records. Equivalent prose/code formatting can fail this narrow contract. No generated code is executed. Expanded coding tasks need an isolated sandbox and an independently reviewed grader before use.
+| Metric | Source and interpretation |
+|---|---|
+| Request/batch latency | Actual client monotonic clock; includes connection, queue, model loading and transport |
+| Output-fragment TTFT | Actual time to first nonempty response fragment; proxy rather than exact token timing; thinking ignored |
+| Model loading | Backend-reported Ollama nanoseconds, separate from inclusive client latency |
+| Token throughput | Backend counts divided by corresponding backend durations; zero duration gives null |
+| Prompt throughput | Uncached prompt count/duration; absent cached count defaults to zero and needs version-aware interpretation |
+| Aggregate throughput | Successful output tokens divided by actual batch wall time; not summed per-request rates |
+| Client dispatch delay | Actual delay to worker start; not server queue time |
+| RAM/CPU | Sampled OS-wide observations, not model/process allocation; sources/interval retained |
+| NVIDIA memory/utilization | Optional existing `nvidia-smi`; not a generic Intel/AMD graphics counter |
+| Residency | Backend `/api/ps` report; not independent utilization proof or automatic iGPU/dGPU classification |
+| Admission requirement | Estimated conservative safety policy |
+| Power, thermals, model-process peak RAM, server queue, full agent coordination | Unavailable without separate suitable instrumentation/workloads |
 
-Peak process/system RAM, GPU memory, CPU/GPU utilization, thermal throttling, power and backend placement are **unmeasured** by the stdlib client. Record independently collected telemetry with tool version, sampling interval and calibration; distinguish wall-meter readings from software estimates. Do not infer utilization, memory pressure or power from token rates. Sustained reliability testing requires a separate approved plan; the bounded smoke protocol does not establish long-run stability.
+Sampled peaks can miss spikes. Windows available physical memory and Linux MemAvailable have different OS semantics. Shared integrated memory is not dedicated VRAM. GPU presence/NPU TOPS does not establish usable acceleration. Preserve backend support and placement limitations.
 
-No creative media performance is implemented. Generative image/video inference, conventional media processing, and rendering must remain separate categories with their own reproducible workloads, model identities and quality measures; never combine them into a single score.
+## Coding and synthetic agent traffic
 
-## API sources
+Two narrow JSON review/content tasks and five original coding categories are implemented: feature, bug correction, tests, review and refactor. Bounded JSON/AST contracts never execute/import generated code. Passing demonstrates the specified structure only; equivalent correct implementations can fail. It does not prove functional equivalence, mutation coverage or general coding strength. Trusted passing/failing/unsafe fixtures test graders independently of model output.
 
-Checked 2026-10-20: [Ollama generate API](https://docs.ollama.com/api/generate), [streaming](https://docs.ollama.com/api/streaming), [installed model metadata](https://docs.ollama.com/api/tags), and [API version](https://docs.ollama.com/api/version). API versions can change; preserve the tested server version and review metrics before comparisons.
+One/two/four API clients share one model. They measure demand, latency, throughput, errors and memory pressure; they do not establish autonomous OpenCode orchestration or independent model instances. Server queue time remains unavailable.
+
+## Integrity, reports and comparisons
+
+v2 records run identity/time, tool/config/prompt versions, sanitized environment, model provenance, admission estimate, warm-ups, resource observations, request outcomes, completion status, warnings and hardware disclosure. Legacy v1 fixtures remain readable. Validation checks structure/consistency, not cryptographic authenticity of server/operator claims.
+
+Fixtures use a synthetic environment and remain unmistakably synthetic. Reports validate first, preserve incomplete/error status, separate correctness/speed, show metric sources and unavailable fields. Comparison requires compatible completed measured v2 runs; differences in model/quantization/settings/runtime/prompt/placement are refused. Different hardware and conditions remain explicit, without a universal score.
+
+Review metadata and artifacts before manual publication. Disclose equipment ownership, donation/loan/financial terms and failures under the [editorial policy](EDITORIAL_POLICY.md). No automatic upload occurs.
+
+## API references
+
+Checked 2026-10-20: [generation](https://docs.ollama.com/api/generate), [streaming](https://docs.ollama.com/api/streaming), [model metadata](https://docs.ollama.com/api/tags), [version](https://docs.ollama.com/api/version) and [running models](https://docs.ollama.com/api/ps). Preserve actual runtime versions; support and fields can differ.

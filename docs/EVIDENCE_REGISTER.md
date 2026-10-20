@@ -17,5 +17,6 @@ Inspected 2026-10-20. Verification applies to source/artifact presence or retain
 | E11 | Separate monitoring project not inspected | Access finding | Unavailable | General finding only | Future coordination | No integration claim |
 | P01 | Synthetic workload research plan — Mini PC AI Lab | Proposed design | Planned | Original plan | Future tasks | Implemented subset documented separately |
 | H01 | Host inventory and brief memory/CPU readings — Mini PC AI Lab | Direct observation | Verified | Sanitized report | Baseline readiness | Zero inference requests; no performance claim |
+| H02 | One Qwen2.5:3b Windows CPU smoke request; strict grade failed | Direct client/OS and backend observations | Verified | Sanitized v2 record/report | Operational first baseline | One trial; no controlled comparison, no retained answer for independent regrading |
 
 See [project summary](EXISTING_PROJECT_EVIDENCE.md), [implemented toolkit](../benchmarks/README.md) and [host observations](../benchmarks/results/readiness-2026-10-20.md). A fixture, roadmap or narrative cannot establish successful real execution.

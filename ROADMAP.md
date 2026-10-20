@@ -1,21 +1,17 @@
 # Roadmap
 
-## Available
+## v1.0 operational scope
 
-- Original synthetic prompts, exact-JSON graders and fixture results.
-- Bounded Ollama client, privacy-conscious inventory, environment checks, result validation and Markdown reports.
-- 19 passing automated tests with a local mock HTTP service.
-- Sanitized technical portfolio and host-readiness observations; no inference performance results yet.
-- Independent editorial policy, hardware wishlist and evaluation proposal.
+The existing CLI now provides environment/model detection, conservative RAM admission, bounded Ollama requests, 1/2/4-client traffic, explicit warm-ups/repeats, system RAM/CPU and optional NVIDIA sampling, five static coding tasks, v2 results/checkpoints, reports and compatible comparisons. Legacy v1 fixtures remain readable. No additional dashboard, website, orchestration platform or maintenance service is needed.
 
-## First measured inference
+A first single-request Windows CPU smoke observation is published, including failed task quality. See [release scope](docs/V1_RELEASE.md) and [actual result](benchmarks/results/baseline-2026-10-20.md).
 
-Restore sufficient memory headroom and a quiet available local runtime. Use the already installed model after checking its digest and server acceptance, one request, a small output cap and a short timeout. Record correctness separately from speed. Publish reviewed raw metrics and environment details, with failures and cache-state limitations. See [methodology](BENCHMARK_METHODOLOGY.md).
+## Routine benchmarking and hardware acquisition
 
-## Controlled comparisons
+Use the documented protocol on accessible systems with adequate resources. Collect controlled repeated/warm results, then real 1/2/4-client observations when safe. Validate raw records, review metadata/disclosure and publish failures as well as useful outcomes. Compare only compatible protocols and preserve hardware/condition differences.
 
-Separate cold/warm runs and collect at least three measured repetitions. Evaluate one/two/four-client demand only when resources permit. Compare another system when access is real. Add independent memory/thermal/power instrumentation and disclose sampling limitations.
+## Future evidence-dependent work
 
-## Deferred
+Real Linux, AMD/Intel GPU offload, NVIDIA acceleration, thermal/power instrumentation and additional donated/loaned systems need actual access. Model-process memory and backend queue timing need suitable independent instrumentation. Secure dynamic coding execution, Android build fixtures and full agent orchestration remain separate future projects rather than prerequisites for this static v1.0 toolkit. Generative media and conventional processing will remain distinct categories.
 
-End-to-end OpenCode-inspired tasks, Android builds, autonomous agent repair loops, extended reliability, generative image/video tasks and eGPU studies need original fixtures, suitable hardware and an explicit resource budget. Conventional rendering/media processing will remain separate from AI inference. No dashboard, website, paid hosting or CRM is planned.
+No automatic outreach, paid infrastructure, model downloading or forced feature expansion is planned. The project now transitions to normal evaluations and hardware acquisition rather than continued broad development.

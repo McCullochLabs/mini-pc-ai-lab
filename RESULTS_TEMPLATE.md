@@ -1,35 +1,26 @@
-# Evaluation report template — no measurements entered
+# Evaluation title
 
-Status: planned / measured / fixture (select one). Never present this blank template as a completed evaluation.
+Status: actual measurement / backend-reported / estimate / unavailable / synthetic. Never mix fixture numbers with measured hardware comparisons.
 
-- System/evaluation unit and acquisition terms:
-- Test date, operator and protocol version:
-- CPU; RAM capacity/type/channels; GPU/usable memory:
-- OS/build; BIOS; drivers; power mode; AC/battery:
-- Ollama version; model name; digest; quantization:
-- Verified backend placement and verification tool:
-- Context/output limits; seed; prompt revision; configuration file:
-- Ambient conditions/background work:
-- Cold/warm state; cache handling; run order:
-- Raw JSON and reviewed inventory artifact:
+- Run ID, UTC start/end, toolkit/schema version and completion status:
+- Hardware/specification fingerprint, OS, CPU/RAM/GPU, inventory sources:
+- Backend/version, model digest/quantization, backend-reported residency:
+- Exact config, prompt digest, thread/context/output limits, repeats and warm-ups:
+- Hardware ownership, donation/loan/discount/financial disclosure, return obligations:
+- Conditions: power mode, AC state, ambient temperature, background activity, cache state:
 
-| Workload | Clients | Samples | Success/fail | Quality passes | TTFT seconds | Generation tokens/s | Prompt tokens/s | Batch output tokens/s |
-|---|---:|---:|---|---:|---|---|---|---|
-| No data | — | — | — | — | — | — | — | — |
+## Request and task outcomes
 
-Report per-request values and range/median when justified by sample size. Include every failure and timeout. Mark each observation directly measured, server-reported, manually measured, estimated or unavailable. Do not turn missing metrics into zero.
+Record inclusive client latency, output-fragment TTFT proxy, backend load/evaluation durations, token counts/rates, aggregate throughput, all errors and deterministic quality grades. Coding static-contract success is not dynamic correctness. Distinguish actual concurrency from autonomous agents or server parallelism.
 
-| Additional metric | Value | Method/tool/version | Sampling/calibration | Limitation |
-|---|---|---|---|---|
-| Peak RAM/GPU memory | Unmeasured | — | — | No built-in telemetry |
-| CPU/GPU utilization | Unmeasured | — | — | No built-in telemetry |
-| Temperature/throttling | Unmeasured | — | — | No built-in telemetry |
-| Wall power | Unmeasured | — | — | No built-in telemetry |
+## Resources
 
-Discuss task correctness separately from inference speed. State that client concurrency does not establish multi-agent autonomy, server parallel execution, or ability to host several large models. Note small-sample, cache, thermal and software differences. Describe suitable workloads and observed limits only to the extent supported by data.
+Record OS-wide sampled RAM/CPU, optional vendor-specific GPU metrics, sources, interval, sample count, sampled peaks and unavailable fields. Do not attribute whole-system memory/CPU to the model. Power/thermals and process peak RAM remain unavailable without instruments.
 
-Hardware provision and affiliation disclosure:
+## Interpretation and limits
 
-Editorial review and correction history:
+Retain partial/interrupted/error status. Explain sample size, warm/cold conditions, grading limits and missing telemetry. Do not infer causality, general coding skill or a universal score from raw speed. Generated answers are not retained, so the recorded quality grade cannot be independently recomputed from the result alone; rerun the original task/grader for reproduction.
 
-Owner publication approval: pending. Review [publication checklist](docs/PUBLICATION_CHECKLIST.md) before releasing any artifact.
+## Reproduction and publication
+
+Attach reviewed machine-readable JSON and generated Markdown, exact configuration and toolkit revision. Use [usage instructions](benchmarks/README.md) and the [methodology](BENCHMARK_METHODOLOGY.md). Review private metadata and disclosure under the [editorial policy](EDITORIAL_POLICY.md) before manual publication. Compare only compatible completed measured v2 runs.

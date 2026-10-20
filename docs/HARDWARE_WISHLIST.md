@@ -4,7 +4,7 @@ Planning date: 2026-10-20. These are desired evaluation configurations, not vali
 
 | Category | Preferred evaluation configuration | Realistic research question | Main limitation / acquisition route |
 |---|---|---|---|
-| Existing Windows baseline | Inspected i5-8250U / approximately 16 GB / UHD 620 host; runtime and memory readiness needed | What can the current computer do with a deliberately small model? | [Hardware/readiness observations](../benchmarks/results/readiness-2026-10-20.md) available; inference pending; no acquisition cost |
+| Existing Windows baseline | Inspected i5-8250U / approximately 16 GB / UHD 620 host | What can the current computer do with a deliberately small model? | [One real CPU smoke request](../benchmarks/results/baseline-2026-10-20.md) recorded with failed strict quality; controlled broader trials pending; no acquisition cost |
 | AMD Ryzen mini PC | 32 GB minimum preferred, 64 GB desirable; dual-channel memory where supported; 1 TB SSD desirable | Small coding models, CPU/iGPU comparison, serving one model under concurrent requests | Runtime/driver support and shared memory must be checked per configuration; seek previous-generation evaluation sample |
 | Ryzen AI / high-memory compact system | 64 GB+ where feasible; exact shared-memory allocation and bandwidth recorded | Does usable memory improve model/context capacity and request reliability? | NPU TOPS does not establish Ollama acceleration; seek loaner rather than costly purchase |
 | Intel NUC-style PC | 32–64 GB supported RAM, SSD; complete system or fully costed barebones | CPU baseline, compact server usability, supported GPU paths | Verify exact acceleration support; ask ASUS/SNUC/Shuttle about demo or previous-generation unit |

@@ -25,4 +25,6 @@ MischiefToons source was unavailable. No image generation, video generation, con
 
 ## Current implementation
 
+The v1.0 toolkit additionally implements five narrow static categories: original feature, bug correction, unit-test generation, review and refactoring. These bounded JSON/AST contracts do not execute generated code or establish general semantic correctness. Trusted fixture pass/fail/unsafe samples validate the graders; the broader behavioral/build/mutation studies above remain proposed. One real legacy review request has a recorded failed strict grade; no real five-task model suite or autonomous orchestration is claimed.
+
 Consult [benchmark documentation](../benchmarks/README.md) for the actual toolkit commands and supported measurements. The table above is a research backlog; do not infer implementation from its inclusion here.
