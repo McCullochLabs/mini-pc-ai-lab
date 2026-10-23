@@ -51,10 +51,11 @@ The run budget stops new batches; in-flight calls drain and may exceed it by tra
 
 ```powershell
 python scripts/lab.py run --fixture --config benchmarks/configurations/coding.json --output .local/coding.json
+python scripts/lab.py run --fixture --config benchmarks/configurations/workflow-reliability.json --output .local/workflow-reliability.json
 python scripts/lab.py run --fixture --config benchmarks/configurations/concurrency.json --output .local/concurrency.json
 ```
 
-The five coding categories are feature implementation, bug correction, test generation, review and refactoring. Graders inspect bounded JSON/AST contracts; **generated code is never executed**. Passing verifies specified structure, not general dynamic correctness; equivalent correct solutions may fail. Trusted fixture answers are synthetic, never measured model quality.
+The full coding profile has nine categories: feature implementation, bug correction, test generation, refactoring and five narrow reviews. The workflow-reliability profile selects four project-informed but fully synthetic reviews: release gates, draft persistence, import integrity and resource cleanup. Graders inspect bounded JSON/AST contracts; **generated code is never executed**. Passing verifies specified structure, not general dynamic correctness; equivalent correct solutions may fail. Trusted fixture answers are synthetic, never measured model quality. See [the derivation and limits](../docs/PROJECT_DERIVED_LESSONS.md).
 
 Real suites require `--allow-inference`, a listed model and, where settings require it, `--allow-heavy`. One/two/four clients share one model. They do not establish independent agents, several model instances, full OpenCode orchestration or server parallelism. Client dispatch delay is not server queue time.
 

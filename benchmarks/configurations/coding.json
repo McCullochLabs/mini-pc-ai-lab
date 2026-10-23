@@ -6,7 +6,7 @@
   "concurrency": [1],
   "repeats": 1,
   "timeout_seconds": 30,
-  "workloads": ["feature_clamp", "bugfix_adult", "unit_tests_adult", "code_review_boundary", "refactor_squares"],
+  "workloads": ["feature_clamp", "bugfix_adult", "unit_tests_adult", "code_review_boundary", "refactor_squares", "review_release_gate", "review_draft_persistence", "review_import_collision", "review_resource_cleanup"],
   "warmups": 0,
   "run_budget_seconds": 120,
   "threads": 2

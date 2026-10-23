@@ -1,0 +1,18 @@
+{
+  "model": "auto",
+  "context_length": 2048,
+  "num_predict": 128,
+  "seed": 42,
+  "concurrency": [1],
+  "repeats": 1,
+  "timeout_seconds": 30,
+  "workloads": [
+    "review_release_gate",
+    "review_draft_persistence",
+    "review_import_collision",
+    "review_resource_cleanup"
+  ],
+  "warmups": 0,
+  "run_budget_seconds": 120,
+  "threads": 2
+}

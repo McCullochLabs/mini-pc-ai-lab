@@ -50,6 +50,35 @@ WORKLOADS = {
         'prompt': 'Refactor this synthetic Python fixture:\ndef squares(values):\n    result = []\n    for value in values:\n        result.append(value * value)\n    return result\nReturn a single unannotated squares(values) function containing one return with one list comprehension [value * value for value in values]. No filters, calls, docstrings, imports or other statements. Return only JSON with one key code containing source.',
         'expected': 'One return of the exact specified list-comprehension AST.',
         'staticcriterion': 'AST equals the specified single-comprehension function; equivalence is not dynamically tested.'},
+    'review_release_gate': {
+        'category': 'workflow_gate_review',
+        'description': 'Find a release decision that accepts one successful gate instead of requiring both.',
+        'prompt': 'Review this original synthetic workflow. Line 1: tests_passed = True. Line 2: build_passed = False. Line 3: approved = tests_passed or build_passed. Policy: a release is approved only when tests and the build both pass. Return only JSON with exactly defect_line (integer 3) and fix (string tests_passed and build_passed).',
+        'expected': {'defect_line': 3, 'fix': 'tests_passed and build_passed'},
+        'staticcriterion': 'Exact typed JSON identifies the permissive gate and its conjunction repair.'},
+    'review_draft_persistence': {
+        'category': 'persistence_review',
+        'description': 'Recognize that saving only during a graceful close loses work on process death.',
+        'prompt': 'Review this original synthetic draft flow. Line 1: draft changes remain only in memory. Line 2: on graceful close, write the draft to storage. Requirement: accepted edits must survive force-stop or process death. Return only JSON with exactly defect_line (integer 2) and fix (string checkpoint after each accepted edit).',
+        'expected': {'defect_line': 2, 'fix': 'checkpoint after each accepted edit'},
+        'staticcriterion': 'Exact typed JSON identifies close-only persistence and the required checkpoint rule.'},
+    'review_import_collision': {
+        'category': 'data_integrity_review',
+        'description': 'Detect an import path that silently replaces an existing record with the same identity.',
+        'prompt': 'Review this original synthetic import flow. Line 1: keep every saved record whose id differs from the imported id. Line 2: append the imported record. Requirement: importing must never replace a saved record. Return only JSON with exactly defect_line (integer 1) and fix (string mint a fresh id, then append without filtering).',
+        'expected': {'defect_line': 1, 'fix': 'mint a fresh id, then append without filtering'},
+        'staticcriterion': 'Exact typed JSON identifies destructive collision handling and the append-only repair.'},
+    'review_resource_cleanup': {
+        'category': 'resource_lifecycle_review',
+        'description': 'Find a completed database operation that commits but leaves its connection open.',
+        'prompt': 'Review this original synthetic database flow. Line 1: connection = open_database(path). Line 2: with connection: run_operation(connection). Line 3: return success. The context commits or rolls back but does not close the connection; completed operations must release the file handle. Return only JSON with exactly defect_line (integer 3) and fix (string close the connection before returning).',
+        'expected': {'defect_line': 3, 'fix': 'close the connection before returning'},
+        'staticcriterion': 'Exact typed JSON identifies the leaked lifecycle and the required close.'},
+}
+
+REVIEW_WORKLOADS = {
+    key: record['expected'] for key, record in WORKLOADS.items()
+    if isinstance(record['expected'], dict)
 }
 
 
@@ -106,10 +135,11 @@ def grade(workload, answer):
         return result(False, 'invalid_json')
     if not isinstance(data, dict):
         return result(False, 'invalid_contract')
-    if workload == 'code_review_boundary':
+    if workload in REVIEW_WORKLOADS:
+        expected = REVIEW_WORKLOADS[workload]
         correct = (set(data) == {'defect_line', 'fix'} and
-                   type(data['defect_line']) is int and data['defect_line'] == 2 and
-                   type(data['fix']) is str and data['fix'] == 'age >= 18')
+                   type(data['defect_line']) is int and
+                   type(data['fix']) is str and data == expected)
         return result(correct, 'contract_match' if correct else 'contract_mismatch')
     if set(data) != {'code'} or type(data['code']) is not str:
         return result(False, 'invalid_contract')
@@ -164,3 +194,11 @@ TRUSTED_SAMPLES['code_review_boundary'] = {
     'fail': '{"defect_line":2,"fix":"age > 18"}',
     'unsafe': '{"defect_line":true,"fix":"age >= 18"}',
 }
+for key, expected in REVIEW_WORKLOADS.items():
+    if key == 'code_review_boundary':
+        continue
+    TRUSTED_SAMPLES[key] = {
+        'pass': json.dumps(expected),
+        'fail': json.dumps({'defect_line': expected['defect_line'], 'fix': 'unsafe shortcut'}),
+        'unsafe': json.dumps({'defect_line': True, 'fix': expected['fix']}),
+    }

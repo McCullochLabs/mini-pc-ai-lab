@@ -4,9 +4,9 @@
 
 Independent, reproducible evaluation of affordable computers for local AI. We report task correctness, useful performance, memory limits and failures without promising favorable findings or audience reach.
 
-## v1.0 toolkit
+## Toolkit
 
-**Detect → Configure → Validate → Benchmark → Record → Report**, using Python 3.10+ and its standard library. The existing CLI supports Windows/Linux inventory, Ollama detection/model listing, RAM admission checks, bounded single/concurrent requests, warm-ups/repeats, system telemetry, five static coding tasks, validated JSON/Markdown reports and compatible-result comparison. No model is downloaded, generated code executed or result uploaded automatically.
+**Detect → Configure → Validate → Benchmark → Record → Report**, using Python 3.10+ and its standard library. The existing CLI supports Windows/Linux inventory, Ollama detection/model listing, RAM admission checks, bounded single/concurrent requests, warm-ups/repeats, system telemetry, nine static coding/workflow-review tasks, validated JSON/Markdown reports and compatible-result comparison. No model is downloaded, generated code executed or result uploaded automatically.
 
 ```powershell
 python scripts/lab.py check --probe-server
@@ -23,7 +23,7 @@ The [first real smoke observation](benchmarks/results/baseline-2026-10-20.md) us
 
 The [earlier readiness record](benchmarks/results/readiness-2026-10-20.md) explains why inference was initially deferred. Memory headroom improved before the later trial. Old pending statements describe that earlier snapshot.
 
-**55 automated tests** cover actual CLI/core behavior with synthetic/mock services and platform fixtures. Linux, AMD graphics and NVIDIA paths have mocked coverage; real hardware certification is not claimed. iGPU/dGPU inference, actual concurrent/repeated/warm-up trials, power, thermals, model-process peak memory and full agent orchestration remain **Pending — not yet measured**. The completed single request's backend reported CPU residency; GPU presence alone is not acceleration evidence.
+**56 automated tests** cover actual CLI/core behavior with synthetic/mock services and platform fixtures. Linux, AMD graphics and NVIDIA paths have mocked coverage; real hardware certification is not claimed. iGPU/dGPU inference, actual concurrent/repeated/warm-up trials, power, thermals, model-process peak memory and full agent orchestration remain **Pending — not yet measured**. The completed single request's backend reported CPU residency; GPU presence alone is not acceleration evidence.
 
 ## Real-World Development Experience
 
@@ -31,7 +31,7 @@ The [earlier readiness record](benchmarks/results/readiness-2026-10-20.md) expla
 - **SladePuzzleCo:** a read-only staged review observation and separately inspected sample-only acceptance-check material inform synthetic content QA. Stored status does not certify publishing readiness or commercial output quality.
 - **MischiefToons:** named with authorization; source evidence was unavailable. Creative accomplishments are not inferred from its name.
 
-See the [portfolio](docs/TECHNICAL_PORTFOLIO.md), [sanitized evidence register](docs/EVIDENCE_REGISTER.md) and [workload plan](docs/REAL_WORLD_WORKLOADS.md). Private source, architecture, dashboards, commercial assets and raw evidence stay excluded. API client concurrency shares one model; it is not full multi-agent orchestration.
+See the [portfolio](docs/TECHNICAL_PORTFOLIO.md), [sanitized evidence register](docs/EVIDENCE_REGISTER.md), [project-derived lessons](docs/PROJECT_DERIVED_LESSONS.md) and [workload plan](docs/REAL_WORLD_WORKLOADS.md). Private source, architecture, dashboards, commercial assets and raw evidence stay excluded. API client concurrency shares one model; it is not full multi-agent orchestration.
 
 ## Hardware partnerships and independence
 

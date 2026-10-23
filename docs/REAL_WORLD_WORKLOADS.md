@@ -12,6 +12,7 @@ These are proposed synthetic equivalents inspired by the [evidence register](EVI
 | 1/2/4 simultaneous requests | Related multi-role design E05 | Same fixed prompt/model/context at bounded concurrency | Per-request latency, queueing, throughput, failure rate and memory when measurable | Planned serving evaluation |
 | Dedicated local inference server | E05 validation design | Separate lab client and explicitly configured model host | Client-observed latency, model-server timings, network overhead separately | Planned topology |
 | Extended coordination | E05/E08 | Disposable tasks with explicit stop budget and retained state | Task acceptance, recovery, contention and reliable completion | Planned; owner approval before extended stress |
+| Workflow reliability review | Sanitized cross-project review | Four original static cases: dual gates, draft checkpointing, import identity collision and connection cleanup | Exact-contract correctness and inference metrics | Implemented static profile |
 
 ## Measurement boundaries
 
@@ -25,6 +26,6 @@ MischiefToons source was unavailable. No image generation, video generation, con
 
 ## Current implementation
 
-The v1.0 toolkit additionally implements five narrow static categories: original feature, bug correction, unit-test generation, review and refactoring. These bounded JSON/AST contracts do not execute generated code or establish general semantic correctness. Trusted fixture pass/fail/unsafe samples validate the graders; the broader behavioral/build/mutation studies above remain proposed. One real legacy review request has a recorded failed strict grade; no real five-task model suite or autonomous orchestration is claimed.
+The toolkit implements nine narrow static categories: original feature, bug correction, unit-test generation, refactoring, boundary review and four workflow-reliability reviews. These bounded JSON/AST contracts do not execute generated code or establish general semantic correctness. Trusted fixture pass/fail/unsafe samples validate the graders; the broader behavioral/build/mutation studies above remain proposed. One real legacy review request has a recorded failed strict grade; no real nine-task model suite or autonomous orchestration is claimed. See [project-derived lessons](PROJECT_DERIVED_LESSONS.md) for the sanitized rationale and the higher-fidelity backlog.
 
 Consult [benchmark documentation](../benchmarks/README.md) for the actual toolkit commands and supported measurements. The table above is a research backlog; do not infer implementation from its inclusion here.

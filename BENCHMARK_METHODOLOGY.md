@@ -1,4 +1,4 @@
-# Benchmark methodology v1.0
+# Benchmark methodology
 
 **Detect â†’ Configure â†’ Validate â†’ Benchmark â†’ Record â†’ Report.** Original fixtures isolate this work from private projects. Transport success, task correctness and speed are separate outcomes.
 
@@ -35,7 +35,7 @@ Sampled peaks can miss spikes. Windows available physical memory and Linux MemAv
 
 ## Coding and synthetic agent traffic
 
-Two narrow JSON review/content tasks and five original coding categories are implemented: feature, bug correction, tests, review and refactor. Bounded JSON/AST contracts never execute/import generated code. Passing demonstrates the specified structure only; equivalent correct implementations can fail. It does not prove functional equivalence, mutation coverage or general coding strength. Trusted passing/failing/unsafe fixtures test graders independently of model output.
+Two narrow JSON review/content tasks and nine original static coding/workflow categories are implemented: feature, bug correction, tests, refactor, boundary review, release gates, draft persistence, import integrity and resource lifecycle. The four workflow reviews are original synthetic translations of patterns documented in the [project-derived lessons](docs/PROJECT_DERIVED_LESSONS.md), not copied source. Bounded JSON/AST contracts never execute/import generated code. Passing demonstrates the specified structure only; equivalent correct implementations can fail. It does not prove functional equivalence, crash recovery, migration safety, resource cleanup, mutation coverage or general coding strength. Trusted passing/failing/unsafe fixtures test graders independently of model output.
 
 One/two/four API clients share one model. They measure demand, latency, throughput, errors and memory pressure; they do not establish autonomous OpenCode orchestration or independent model instances. Server queue time remains unavailable.
 
