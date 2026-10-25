@@ -23,3 +23,7 @@ The [workload plan](REAL_WORLD_WORKLOADS.md) uses original isolated fixtures. Th
 ## Partnership opportunities
 
 Evaluation, refurbished, donated and temporary loaner hardware can support reproducible reports after safe setup. See the [proposal](../outreach/MANUFACTURER_PROPOSAL.md). Hardware support is disclosed, conclusions remain independent, and no favorable findings, audience reach or publication schedule is guaranteed.
+
+## Additional inspected development patterns
+
+A follow-up local inspection found source and test material relevant to draft recovery, record integrity, snapshot-bound review and bounded request processing. These motivate original disposable lab fixtures; they are not claims of a deployed multi-agent system, security certification or newly reproduced application outcomes. See evidence L01-L04 in [project-derived lessons](PROJECT_DERIVED_LESSONS.md). Private identities and implementation details remain excluded.

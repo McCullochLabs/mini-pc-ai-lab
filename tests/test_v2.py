@@ -59,6 +59,17 @@ class V2Tests(unittest.TestCase):
         self.assertEqual(result['resources']['sources']['ram'], 'mock-system-telemetry')
         self.assertIsNotNone(result['batches'][0]['requests'][0]['client_dispatch_delay_seconds'])
 
+    def test_workflow_protocol_validates_mock_result(self):
+        self.config['workloads'] = ['review_release_gate', 'review_release_gate_clean']
+        result = lab.run_v2(self.config, self.endpoint)
+        self.assertTrue(lab.validate(result))
+        for batch in result['batches']:
+            for request in batch['requests']:
+                self.assertEqual(request['quality']['grader'], 'workflow-review-v2')
+        result['batches'][0]['requests'][0]['quality']['grader'] = 'static-ast-v1'
+        with self.assertRaises(ValueError):
+            lab.validate(result)
+
     def test_ram_unknown_and_insufficient_reject_before_inference(self):
         for available in (None, 1):
             self.hardware['available_ram_bytes'] = available

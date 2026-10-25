@@ -12,7 +12,7 @@ spec.loader.exec_module(coding)
 
 class CodingTests(unittest.TestCase):
     def test_all_nine_categories_have_complete_contracts(self):
-        self.assertEqual(len(coding.WORKLOADS), 9)
+        self.assertEqual(len(coding.WORKLOADS), 13)
         self.assertEqual(len({x['category'] for x in coding.WORKLOADS.values()}), 9)
         for record in coding.WORKLOADS.values():
             for key in ('prompt', 'category', 'description', 'expected', 'staticcriterion'):
@@ -64,17 +64,30 @@ class CodingTests(unittest.TestCase):
         self.assertFalse(coding.grade('review_release_gate', '{"defect_line":3,"fix":3}')['passed'])
         self.assertEqual(coding.grade('missing', '{}')['details'], 'unknown_workload')
 
-    def test_project_derived_reviews_are_independent_synthetic_contracts(self):
-        expected = {
-            'review_release_gate': (3, 'tests_passed and build_passed'),
-            'review_draft_persistence': (2, 'checkpoint after each accepted edit'),
-            'review_import_collision': (1, 'mint a fresh id, then append without filtering'),
-            'review_resource_cleanup': (3, 'close the connection before returning'),
-        }
-        for workload, (line, fix) in expected.items():
-            with self.subTest(workload=workload):
-                answer = json.dumps({'defect_line': line, 'fix': fix})
-                self.assertTrue(coding.grade(workload, answer)['passed'])
+    def test_workflow_repairs_and_clean_controls(self):
+        for key, case in coding._REVIEW_CASES.items():
+            for fix in case['alternatives']:
+                answer = json.dumps({'defect_line': coding.WORKLOADS[key]['expected']['defect_line'], 'fix': fix})
+                self.assertTrue(coding.grade(key, answer)['passed'], (key, fix))
+                self.assertFalse(coding.grade(key + '_clean', answer)['passed'])
+            clean = json.dumps({'defect_line': None, 'fix': None})
+            self.assertTrue(coding.grade(key + '_clean', clean)['passed'])
+            self.assertFalse(coding.grade(key, clean)['passed'])
+
+    def test_workflow_rejects_wrong_lines_and_unsafe_repairs(self):
+        for key in coding._REVIEW_CASES:
+            expected = coding.WORKLOADS[key]['expected']
+            self.assertFalse(coding.grade(key, json.dumps(dict(expected, defect_line=99)))['passed'])
+            for fix in ['__import__("os")', 'while True: pass', 'True', 'acknowledge(); store.write(draft)']:
+                self.assertFalse(coding.grade(key, json.dumps(dict(expected, fix=fix)))['passed'])
+
+    def test_review_prompts_do_not_supply_expected_response(self):
+        for key in coding._REVIEW_CASES:
+            prompt = coding.WORKLOADS[key]['prompt']
+            self.assertNotIn(key, prompt)
+            self.assertNotIn('integer source line ' + str(coding.WORKLOADS[key]['expected']['defect_line']), prompt)
+            self.assertIn('If there is no defect', prompt)
+            self.assertEqual(coding.grade(key, coding.TRUSTED_SAMPLES[key]['pass'])['grader'], coding.REVIEW_GRADER)
 
     def test_equivalent_implementation_is_documented_strict_failure(self):
         code = 'def is_adult(age):\n    return not age < 18'

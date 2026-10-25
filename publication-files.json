@@ -46,5 +46,6 @@
   "tests/test_coding.py",
   "tests/test_hardware.py",
   "tests/test_lab.py",
-  "tests/test_v2.py"
+  "tests/test_v2.py",
+  "docs/LOCAL_AUDIT_2026-10-25.md"
 ]

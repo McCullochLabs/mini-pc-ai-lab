@@ -7,6 +7,7 @@ import ast
 import json
 
 GRADER = 'static-ast-v1'
+REVIEW_GRADER = 'workflow-review-v2'
 MAX_ANSWER = 8192
 MAX_CODE = 2048
 MAX_NODES = 160
@@ -52,29 +53,58 @@ WORKLOADS = {
         'staticcriterion': 'AST equals the specified single-comprehension function; equivalence is not dynamically tested.'},
     'review_release_gate': {
         'category': 'workflow_gate_review',
-        'description': 'Find a release decision that accepts one successful gate instead of requiring both.',
-        'prompt': 'Review this original synthetic workflow. Line 1: tests_passed = True. Line 2: build_passed = False. Line 3: approved = tests_passed or build_passed. Policy: a release is approved only when tests and the build both pass. Return only JSON with exactly defect_line (integer 3) and fix (string tests_passed and build_passed).',
-        'expected': {'defect_line': 3, 'fix': 'tests_passed and build_passed'},
-        'staticcriterion': 'Exact typed JSON identifies the permissive gate and its conjunction repair.'},
+        'description': 'Review a release decision against a two-gate approval policy.',
+        'expected': {'defect_line': 3, 'fix': 'tests_passed and build_passed'}},
     'review_draft_persistence': {
         'category': 'persistence_review',
-        'description': 'Recognize that saving only during a graceful close loses work on process death.',
-        'prompt': 'Review this original synthetic draft flow. Line 1: draft changes remain only in memory. Line 2: on graceful close, write the draft to storage. Requirement: accepted edits must survive force-stop or process death. Return only JSON with exactly defect_line (integer 2) and fix (string checkpoint after each accepted edit).',
-        'expected': {'defect_line': 2, 'fix': 'checkpoint after each accepted edit'},
-        'staticcriterion': 'Exact typed JSON identifies close-only persistence and the required checkpoint rule.'},
+        'description': 'Review edit acknowledgement against a durability policy.',
+        'expected': {'defect_line': 3, 'fix': 'store.write(draft); acknowledge()'}},
     'review_import_collision': {
         'category': 'data_integrity_review',
-        'description': 'Detect an import path that silently replaces an existing record with the same identity.',
-        'prompt': 'Review this original synthetic import flow. Line 1: keep every saved record whose id differs from the imported id. Line 2: append the imported record. Requirement: importing must never replace a saved record. Return only JSON with exactly defect_line (integer 1) and fix (string mint a fresh id, then append without filtering).',
-        'expected': {'defect_line': 1, 'fix': 'mint a fresh id, then append without filtering'},
-        'staticcriterion': 'Exact typed JSON identifies destructive collision handling and the append-only repair.'},
+        'description': 'Review a record merge against append-only identity rules.',
+        'expected': {'defect_line': 2, 'fix': 'incoming = {**incoming, "id": fresh_id(records)}'}},
     'review_resource_cleanup': {
         'category': 'resource_lifecycle_review',
-        'description': 'Find a completed database operation that commits but leaves its connection open.',
-        'prompt': 'Review this original synthetic database flow. Line 1: connection = open_database(path). Line 2: with connection: run_operation(connection). Line 3: return success. The context commits or rolls back but does not close the connection; completed operations must release the file handle. Return only JSON with exactly defect_line (integer 3) and fix (string close the connection before returning).',
-        'expected': {'defect_line': 3, 'fix': 'close the connection before returning'},
-        'staticcriterion': 'Exact typed JSON identifies the leaked lifecycle and the required close.'},
+        'description': 'Review a database operation against handle lifetime requirements.',
+        'expected': {'defect_line': 3, 'fix': 'try:\n    with connection: run_operation(connection)\nfinally:\n    connection.close()'}},
 }
+
+_REVIEW_CASES = {
+    'review_release_gate': {
+        'policy': 'tests_passed and build_passed are arbitrary Boolean inputs. A release may be approved exactly when both checks pass. Replace only the expression after return if needed.',
+        'bug': 'def approve(tests_passed, build_passed):\n    # Release decision\n    return tests_passed or build_passed',
+        'clean': 'def approve(tests_passed, build_passed):\n    # Release decision\n    return tests_passed and build_passed',
+        'alternatives': ['tests_passed and build_passed', 'not (not tests_passed or not build_passed)', 'tests_passed == True and build_passed == True']},
+    'review_draft_persistence': {
+        'policy': 'apply_edit mutates draft in memory. store.write(draft) and store.checkpoint(draft) are two synchronous atomic durable-write APIs: both return None on success and raise on failure. acknowledge() tells the caller that an edit was accepted. Every acknowledged edit must survive process death, and a failed write must not be acknowledged. Replace one faulty line with one or more statements if needed.',
+        'bug': 'def accept_edit(draft, edit, store):\n    apply_edit(draft, edit)\n    acknowledge()\n    return draft',
+        'clean': 'def accept_edit(draft, edit, store):\n    apply_edit(draft, edit)\n    store.write(draft)\n    acknowledge()\n    return draft',
+        'alternatives': ['store.write(draft); acknowledge()', 'store.checkpoint(draft); acknowledge()']},
+    'review_import_collision': {
+        'policy': 'records is a list of saved dictionaries with unique string id fields. incoming is a caller-owned dictionary with an id that may collide. fresh_id(records) returns an id different from every saved id and the incoming id. Imports must append one shallow copy with that fresh id, preserve all saved records and their order, and leave the caller-owned incoming unchanged. Replace one faulty line with one or more statements if needed; the return line stays unchanged.',
+        'bug': 'def merge(records, incoming):\n    records = [r for r in records if r["id"] != incoming["id"]]\n    return records + [incoming]',
+        'clean': 'def merge(records, incoming):\n    incoming = {**incoming, "id": fresh_id(records)}\n    return records + [incoming]',
+        'alternatives': ['incoming = {**incoming, "id": fresh_id(records)}', 'incoming = dict(incoming, id=fresh_id(records))', 'incoming = incoming.copy(); incoming["id"] = fresh_id(records)']},
+    'review_resource_cleanup': {
+        'policy': 'open_database(path) returns an open connection. Its context manager commits or rolls back but never closes it. run_operation(connection) may succeed or raise. connection.close() releases the handle. closing(connection) is the already-imported contextlib.closing helper. The handle must close on both operation success and failure; transaction handling and the success return must be preserved. Replace one faulty line with one or more statements if needed.',
+        'bug': 'def operate(path):\n    connection = open_database(path)\n    with connection: run_operation(connection)\n    return True',
+        'clean': 'def operate(path):\n    connection = open_database(path)\n    with closing(connection):\n        with connection: run_operation(connection)\n    return True',
+        'alternatives': ['try:\n    with connection: run_operation(connection)\nfinally:\n    connection.close()', 'with closing(connection):\n    with connection: run_operation(connection)']},
+}
+
+for _key, _case in _REVIEW_CASES.items():
+    for _clean in (False, True):
+        _id = _key + ('_clean' if _clean else '')
+        _record = dict(WORKLOADS[_key])
+        _record.update(
+            prompt='Review this synthetic Python code against its API contract and policy. ' + _case['policy'] + '\n' +
+                   '\n'.join(f'{i}: {line}' for i, line in enumerate(_case['clean' if _clean else 'bug'].splitlines(), 1)) +
+                   '\nReturn only JSON with exactly defect_line and fix. If a defect exists, defect_line is the integer source line to replace and fix is the replacement Python expression or statements, without line numbers or code fences. If there is no defect, both values must be null.',
+            expected={'defect_line': None, 'fix': None} if _clean else _record['expected'],
+            grader=REVIEW_GRADER,
+            protocol_version='workflow-review-v2',
+            staticcriterion='Bounded AST inspection. Gate expressions are evaluated by a Boolean-only interpreter on all four inputs. Other repairs accept the documented equivalent API/AST forms; clean controls require null/null. No generated code executes.')
+        WORKLOADS[_id] = _record
 
 REVIEW_WORKLOADS = {
     key: record['expected'] for key, record in WORKLOADS.items()
@@ -119,10 +149,79 @@ def _json_object(text):
     return json.loads(text, object_pairs_hook=pairs, parse_constant=reject_constant)
 
 
+def _review_tree(code, mode):
+    if len(code) > MAX_CODE or code.count('\n') > 60 or not _bounded_nesting(code, MAX_DEPTH):
+        raise ValueError('repair limit')
+    tree = ast.parse(code, mode=mode)
+    pending = [(tree, 0)]
+    count = 0
+    while pending:
+        node, depth = pending.pop()
+        count += 1
+        if count > MAX_NODES or depth > MAX_DEPTH:
+            raise ValueError('repair AST limit')
+        pending.extend((child, depth + 1) for child in ast.iter_child_nodes(node))
+    return tree
+
+
+def _boolean(node, inputs):
+    """Interpret only a finite Boolean expression language, never Python code."""
+    if type(node) is ast.Name and node.id in inputs:
+        return inputs[node.id]
+    if type(node) is ast.Constant and type(node.value) is bool:
+        return node.value
+    if type(node) is ast.UnaryOp and type(node.op) is ast.Not:
+        return not _boolean(node.operand, inputs)
+    if type(node) is ast.BoolOp and type(node.op) in (ast.And, ast.Or):
+        # Inspect all operands, so a forbidden AST cannot hide after a short circuit.
+        values = [_boolean(value, inputs) for value in node.values]
+        return all(values) if type(node.op) is ast.And else any(values)
+    if type(node) is ast.IfExp:
+        condition = _boolean(node.test, inputs)
+        yes = _boolean(node.body, inputs)
+        no = _boolean(node.orelse, inputs)
+        return yes if condition else no
+    if type(node) is ast.Compare:
+        left = _boolean(node.left, inputs)
+        comparisons = []
+        for operation, expression in zip(node.ops, node.comparators):
+            right = _boolean(expression, inputs)
+            if type(operation) in (ast.Eq, ast.Is):
+                comparisons.append(left == right)
+            elif type(operation) in (ast.NotEq, ast.IsNot):
+                comparisons.append(left != right)
+            else:
+                raise ValueError('unsupported Boolean comparison')
+            left = right
+        return all(comparisons)
+    raise ValueError('unsupported Boolean expression')
+
+
+def _workflow_review(workload, data):
+    if set(data) != {'defect_line', 'fix'}:
+        return False
+    if workload.endswith('_clean'):
+        return data['defect_line'] is None and data['fix'] is None
+    expected = WORKLOADS[workload]['expected']
+    if type(data['defect_line']) is not int or data['defect_line'] != expected['defect_line'] or type(data['fix']) is not str:
+        return False
+    if workload == 'review_release_gate':
+        expression = _review_tree(data['fix'], 'eval').body
+        return all(_boolean(expression, {'tests_passed': tests, 'build_passed': build}) == (tests and build)
+                   for tests in (False, True) for build in (False, True))
+    # These three one-line-replacement contracts deliberately recognize finite
+    # equivalent statement forms, rather than claim general Python equivalence.
+    # Parsing and comparing syntax never calls methods or executes a repair.
+    tree = _review_tree(data['fix'], 'exec')
+    actual = ast.dump(tree, include_attributes=False)
+    return any(actual == ast.dump(ast.parse(form, mode='exec'), include_attributes=False)
+               for form in _REVIEW_CASES[workload]['alternatives'])
+
+
 def grade(workload, answer):
     """Bounded, deterministic inspection returning only a safe fixed detail enum."""
     def result(passed, details):
-        return {'passed': passed, 'grader': GRADER, 'details': details}
+        return {'passed': passed, 'grader': WORKLOADS.get(workload, {}).get('grader', GRADER), 'details': details}
     if workload not in WORKLOADS:
         return result(False, 'unknown_workload')
     if not isinstance(answer, str) or len(answer) > MAX_ANSWER:
@@ -135,6 +234,12 @@ def grade(workload, answer):
         return result(False, 'invalid_json')
     if not isinstance(data, dict):
         return result(False, 'invalid_contract')
+    if WORKLOADS[workload].get('grader') == REVIEW_GRADER:
+        try:
+            correct = _workflow_review(workload, data)
+        except (SyntaxError, ValueError, TypeError, RecursionError, MemoryError):
+            correct = False
+        return result(correct, 'contract_match' if correct else 'contract_mismatch')
     if workload in REVIEW_WORKLOADS:
         expected = REVIEW_WORKLOADS[workload]
         correct = (set(data) == {'defect_line', 'fix'} and

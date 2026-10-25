@@ -592,7 +592,7 @@ def validate_v2(result):
                 proxy.update(workloads=['defect_review'], concurrency=[1], repeats=1)
                 q = dict(request, workload='defect_review')
                 if q['status'] == 'ok':
-                    expected_grader = 'fixture-synthetic-not-model-output' if result['mode'] == 'fixture' else ('exact-json-v1' if key[2] in ('defect_review', 'structured_qa') else 'static-ast-v1')
+                    expected_grader = 'fixture-synthetic-not-model-output' if result['mode'] == 'fixture' else ('exact-json-v1' if key[2] in ('defect_review', 'structured_qa') else sibling('coding').WORKLOADS.get(key[2], {}).get('grader', 'static-ast-v1'))
                     if q['quality']['grader'] != expected_grader:
                         raise ValueError('invalid grader provenance')
                     q['quality'] = dict(q['quality'], grader='fixture-synthetic-not-model-output')

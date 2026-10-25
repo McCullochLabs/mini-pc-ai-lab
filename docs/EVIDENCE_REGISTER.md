@@ -20,3 +20,7 @@ Inspected 2026-10-20. Verification applies to source/artifact presence or retain
 | H02 | One Qwen2.5:3b Windows CPU smoke request; strict grade failed | Direct client/OS and backend observations | Verified | Sanitized v2 record/report | Operational first baseline | One trial; no controlled comparison, no retained answer for independent regrading |
 
 See [project summary](EXISTING_PROJECT_EVIDENCE.md), [implemented toolkit](../benchmarks/README.md) and [host observations](../benchmarks/results/readiness-2026-10-20.md). A fixture, roadmap or narrative cannot establish successful real execution.
+
+## Follow-up inspection, 2026-10-25
+
+L01-L04 in [project-derived lessons](PROJECT_DERIVED_LESSONS.md) record newly inspected local source/document evidence. These are source-inspection findings only, not fresh application test passes. Earlier entries retain their original inspection date; the private audit records current file presence and hash agreement separately. No new inference measurement was taken.

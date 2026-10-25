@@ -6,7 +6,7 @@ Independent, reproducible evaluation of affordable computers for local AI. We re
 
 ## Toolkit
 
-**Detect → Configure → Validate → Benchmark → Record → Report**, using Python 3.10+ and its standard library. The existing CLI supports Windows/Linux inventory, Ollama detection/model listing, RAM admission checks, bounded single/concurrent requests, warm-ups/repeats, system telemetry, nine static coding/workflow-review tasks, validated JSON/Markdown reports and compatible-result comparison. No model is downloaded, generated code executed or result uploaded automatically.
+**Detect → Configure → Validate → Benchmark → Record → Report**, using Python 3.10+ and its standard library. The existing CLI supports Windows/Linux inventory, Ollama detection/model listing, RAM admission checks, bounded single/concurrent requests, warm-ups/repeats, system telemetry, 13 static coding/workflow-review cases across nine categories, validated JSON/Markdown reports and compatible-result comparison. No model is downloaded, generated code executed or result uploaded automatically.
 
 ```powershell
 python scripts/lab.py check --probe-server
@@ -23,7 +23,7 @@ The [first real smoke observation](benchmarks/results/baseline-2026-10-20.md) us
 
 The [earlier readiness record](benchmarks/results/readiness-2026-10-20.md) explains why inference was initially deferred. Memory headroom improved before the later trial. Old pending statements describe that earlier snapshot.
 
-**56 automated tests** cover actual CLI/core behavior with synthetic/mock services and platform fixtures. Linux, AMD graphics and NVIDIA paths have mocked coverage; real hardware certification is not claimed. iGPU/dGPU inference, actual concurrent/repeated/warm-up trials, power, thermals, model-process peak memory and full agent orchestration remain **Pending — not yet measured**. The completed single request's backend reported CPU residency; GPU presence alone is not acceleration evidence.
+**59 automated tests** cover actual CLI/core behavior with synthetic/mock services and platform fixtures. Linux, AMD graphics and NVIDIA paths have mocked coverage; real hardware certification is not claimed. iGPU/dGPU inference, actual concurrent/repeated/warm-up trials, power, thermals, model-process peak memory and full agent orchestration remain **Pending — not yet measured**. The completed single request's backend reported CPU residency; GPU presence alone is not acceleration evidence.
 
 ## Real-World Development Experience
 

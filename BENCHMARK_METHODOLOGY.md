@@ -1,6 +1,6 @@
 # Benchmark methodology
 
-**Detect â†’ Configure â†’ Validate â†’ Benchmark â†’ Record â†’ Report.** Original fixtures isolate this work from private projects. Transport success, task correctness and speed are separate outcomes.
+**Detect -> Configure -> Validate -> Benchmark -> Record -> Report.** Original fixtures isolate this work from private projects. Transport success, task correctness and speed are separate outcomes.
 
 ## Environment, admission and stopping
 
@@ -50,3 +50,5 @@ Review metadata and artifacts before manual publication. Disclose equipment owne
 ## API references
 
 Checked 2026-10-20: [generation](https://docs.ollama.com/api/generate), [streaming](https://docs.ollama.com/api/streaming), [model metadata](https://docs.ollama.com/api/tags), [version](https://docs.ollama.com/api/version) and [running models](https://docs.ollama.com/api/ps). Preserve actual runtime versions; support and fields can differ.
+
+The revised workflow-review-v2 suite uses eight cases (four defective and four clean), with finite equivalent repair forms and separate protocol grading. Historical workflow results used answer-supplying prompts and are not independent defect-detection evidence. See the follow-up in project-derived lessons.
