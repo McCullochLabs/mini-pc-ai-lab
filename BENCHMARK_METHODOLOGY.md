@@ -52,3 +52,11 @@ Review metadata and artifacts before manual publication. Disclose equipment owne
 Checked 2026-10-20: [generation](https://docs.ollama.com/api/generate), [streaming](https://docs.ollama.com/api/streaming), [model metadata](https://docs.ollama.com/api/tags), [version](https://docs.ollama.com/api/version) and [running models](https://docs.ollama.com/api/ps). Preserve actual runtime versions; support and fields can differ.
 
 The revised workflow-review-v2 suite uses eight cases (four defective and four clean), with finite equivalent repair forms and separate protocol grading. Historical workflow results used answer-supplying prompts and are not independent defect-detection evidence. See the follow-up in project-derived lessons.
+
+## Proposed development and hardware comparisons
+
+Before a new study, fix the fixture revision, acceptance thresholds, runtime and model digest, quantization, context, repetitions, time limits, memory headroom and failure handling. Separate clean from incremental builds and cold loading from confirmed resident runs. Use paired CPU/GPU or local/split-host trials at equivalent settings when practical. Report unsupported settings, backend placement, oversubscription and failures. The existing comparison command requires matching placement categories. Analyze CPU/GPU pairs separately from that command. The CLI accepts HTTP loopback only, so split-host studies need separate transport validation. Record wall energy and temperatures only with a documented measurement source and interval.
+
+Report build, inference, validation and overall workflow wall times separately. Include task acceptance rate, per-request latency, aggregate throughput, peak sampled RAM/VRAM and errors. Keep accepted outputs and failure classes distinct. For remote inference, distinguish client, backend and network observations and avoid deriving server queue time from client delay.
+
+For independent agent studies, record role and tool boundaries, attempt and token budgets, checkpoints, retry and provider-failure paths, and acceptance from a separate verifier. Inject interruptions at defined points and check for corrupted artifacts, replay and partial completion. These proposed protocols extend the existing static and serving profiles. See the [workload plan](docs/REAL_WORLD_WORKLOADS.md).

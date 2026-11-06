@@ -53,3 +53,13 @@ Local source inspection adds these sanitized references; exact source paths and 
 | L04 | Separate local development prototype: documentation, intake source and tests | Bounded requests, overload behavior and receipt integrity motivate future lab tests | Source presence does not demonstrate deployment, security certification or measured agent orchestration |
 
 No private project names, source code, internal service details or artifacts are published here. Other projects remained read-only. The earlier public publishing/offline-app derivations are retained as historical rationale, not promoted to newly verified source findings in this audit.
+
+## Follow-up lessons from GitHub artifacts, 2026-11-06
+
+| Evidence | Transfer to a lab workload | Status |
+|---|---|---|
+| G01–G05, Android build and QA workflows plus retained outcomes | Bind APK identity, test results and input/display conditions to the same fixture revision. Separate Gradle/Godot builds, headless tests, emulator, device, large-text and assistive-technology checks. | Proposed |
+| G06, bridge policies and retained reports | Use a simulated provider failure and bounded fallback. Save attempt budgets and verify stale or duplicate receipts cannot produce a second accepted completion. Treat unknown token counts as unavailable. | Proposed |
+| G07–G08, puzzle and editorial tests and retained pack verification | Generate an original pack and verify puzzle correctness, rendered PDF and final artifact identity independently. Include malformed inputs, render mismatches and clean controls. | Proposed |
+
+Source classes and historical limits are in the [evidence register](EVIDENCE_REGISTER.md). The existing static profile and its graders are preserved.

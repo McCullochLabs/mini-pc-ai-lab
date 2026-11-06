@@ -1,29 +1,23 @@
 # Technical portfolio
 
-Mini PC AI Lab builds on inspected Android development and validation material, AI-assisted development workflow design and staged content review. It is a new independent benchmarking initiative, with no established audience or hardware-review history claimed.
+The lab uses original fixtures to approximate development work observed across Android, AI-assisted engineering and content production. Evidence classifications and verification limits are recorded in the [evidence register](EVIDENCE_REGISTER.md).
 
-## Development background and existing projects
+## Android development
 
-**AI Retro Game Studio:** Android/Kotlin application and automated-test source, a retained successful build log, debug/unsigned-release artifact presence, device-regression receipts and a retained 85-test JUnit snapshot were inspected. Documentation separates OpenCode-assisted development, supervision, testing and review. Historical execution was not rerun, exact source/build linkage remains unauthenticated, and a different older 73-test narrative remains qualified. These support development experience, not public availability or autonomous production readiness.
+**Inspected artifacts.** Kotlin/Gradle applications define JVM suites and debug APK builds, with Android instrumentation available in one application. Godot project workflows define headless checks and Android exports. Device QA contracts cover touch input, persistence and reproducible evidence collection. An Android project documents accessibility preferences and separates layout checks, physical-device validation and assistive-technology testing.
 
-**SladePuzzleCo:** A staged publishing-review workflow was observed read-only. Separately inspected sample-only development material implements acceptance/evidence-integrity checks. This motivates synthetic content-validation and document-assistance workloads. Private production content and architecture remain private; successful commercial publication or production document quality is not established here.
+**Historical retained evidence.** Reports record debug builds, regression checks and physical-device sessions at specific milestones. Build and test outcomes can diverge even for the same commit. Large-text and TalkBack coverage requires an explicit, versioned device receipt. These findings motivate measuring compile, test and packaging times independently, and measuring development responsiveness during a concurrent model workload.
 
-**MischiefToons:** Named with owner authorization, but source evidence was unavailable in the scoped inspection. Creative pipeline accomplishments cannot yet be included as verified experience. Animation, asset generation, media processing and generative AI remain distinct future categories.
+## AI-assisted engineering
 
-## Verified accomplishments and AI workflows
+**Inspected artifacts.** OpenCode role definitions separate implementation, testing, review and supervision. Configuration includes an OpenRouter route. Freebuff-related tooling provides synthetic orchestration and receipt validation, bounded provider fallback policies, restart controls and explicit handling of unknown token usage. Ollama code in the lab and a content tool supports local model requests. Model configuration, policy and retained synthetic checks establish separate levels of evidence from live routing or full autonomous operation.
 
-Concrete evidence includes Android build/test material, retained validation receipts and implemented acceptance-check logic. Role documentation and historical reports motivate coding assistance, independent review, test generation, bounded repair and structured QA. Source presence alone cannot authenticate AI authorship, model quality or cost savings. Claim-level scope is maintained in the [evidence register](EVIDENCE_REGISTER.md).
+**Proposed lab study.** Use isolated workloads to measure validation gates, repeated provider failures, retry budgets, checkpoint recovery and total accepted completions. Record tokens only where reported, distinguish provider errors from task failures and use simulated outages before live experiments.
 
-## Hardware questions and proposed benchmarks
+## Content production
 
-Can a modest dedicated model host leave the development machine responsive? How do usable memory and request contention affect correctness and latency? The [existing laptop readiness record](../benchmarks/results/readiness-2026-10-20.md) identifies an i5-8250U/approximately 16 GB system with limited free memory during inspection; it is not an inference result or proof that AI caused that pressure.
+**Inspected artifacts.** Public puzzle-engine code and tests cover generated answers, corrupted output, PDF readback and editorial audit trails. Separately retained SladePuzzleCo observations cover staged review and sample-only acceptance checks. Historical activity-pack verification recorded rendering checks and preserved failures and skips.
 
-The [workload plan](REAL_WORLD_WORKLOADS.md) uses original isolated fixtures. The client implements narrow defect-review/structured QA and simultaneous request demand; actual feature implementation, agent coordination, Android builds and creative pipelines remain proposals. The [diagram](../assets/diagrams/proposed-lab.svg) is a proposed lab design, not deployed integration.
+**Proposed lab study.** Generate original puzzle and document fixtures, validate their constraints and answer keys, render the output and detect inconsistencies after packaging. Separate deterministic generation and PDF work from model-assisted review. Commercial assets and private project material stay out of public lab runs.
 
-## Partnership opportunities
-
-Evaluation, refurbished, donated and temporary loaner hardware can support reproducible reports after safe setup. See the [proposal](../outreach/MANUFACTURER_PROPOSAL.md). Hardware support is disclosed, conclusions remain independent, and no favorable findings, audience reach or publication schedule is guaranteed.
-
-## Additional inspected development patterns
-
-A follow-up local inspection found source and test material relevant to draft recovery, record integrity, snapshot-bound review and bounded request processing. These motivate original disposable lab fixtures; they are not claims of a deployed multi-agent system, security certification or newly reproduced application outcomes. See evidence L01-L04 in [project-derived lessons](PROJECT_DERIVED_LESSONS.md). Private identities and implementation details remain excluded.
+See the [workload plan](REAL_WORLD_WORKLOADS.md) and [project-derived lessons](PROJECT_DERIVED_LESSONS.md).
