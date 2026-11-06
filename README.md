@@ -1,8 +1,10 @@
-# Mini PC AI Lab
+# McCullochLabs AI Hardware Lab
 
-**Testing affordable hardware for real-world local AI development.**
+**Independent, reproducible hardware testing for real-world local AI development.**
 
-Independent, reproducible evaluation of affordable computers for local AI. We report task correctness, useful performance, memory limits and failures without promising favorable findings or audience reach.
+**Formerly Mini PC AI Lab — expanded to evaluate a wider range of hardware for local AI development.**
+
+The lab studies accessible hardware for building, testing and running local AI workflows. Evaluation categories include laptops and mini PCs, refurbished enterprise computers, expandable desktops, CPU-only systems, NVIDIA GPU workstations, dedicated model servers and split development/model-host setups. Published measurements currently cover one CPU-only system.
 
 ## Toolkit
 
@@ -23,19 +25,17 @@ The [first real smoke observation](benchmarks/results/baseline-2026-10-20.md) us
 
 The [earlier readiness record](benchmarks/results/readiness-2026-10-20.md) explains why inference was initially deferred. Memory headroom improved before the later trial. Old pending statements describe that earlier snapshot.
 
-**59 automated tests** cover actual CLI/core behavior with synthetic/mock services and platform fixtures. Linux, AMD graphics and NVIDIA paths have mocked coverage; real hardware certification is not claimed. iGPU/dGPU inference, actual concurrent/repeated/warm-up trials, power, thermals, model-process peak memory and full agent orchestration remain **Pending — not yet measured**. The completed single request's backend reported CPU residency; GPU presence alone is not acceleration evidence.
+Automated tests cover actual CLI/core behavior with synthetic/mock services and platform fixtures. Linux, AMD graphics and NVIDIA paths have mocked coverage; real hardware certification is not claimed. iGPU/dGPU inference, actual concurrent/repeated/warm-up trials, power, thermals, model-process peak memory and full agent orchestration remain **Pending — not yet measured**. The completed single request's backend reported CPU residency; GPU presence alone is not acceleration evidence.
 
 ## Real-World Development Experience
 
-- **AI Retro Game Studio:** inspected Android development/build/test artifacts, retained validation receipts and documented OpenCode-assisted roles inform isolated coding/review tasks. Historical executions were not rerun or authenticated as a public release.
-- **SladePuzzleCo:** a read-only staged review observation and separately inspected sample-only acceptance-check material inform synthetic content QA. Stored status does not certify publishing readiness or commercial output quality.
-- **MischiefToons:** named with authorization; source evidence was unavailable. Creative accomplishments are not inferred from its name.
+Kotlin/Gradle and Godot Android build and QA workflows, agent-assisted implementation and review, and puzzle/PDF integrity checks inform the lab’s original workloads. Planned experiments include concurrent builds and inference, CPU/GPU comparisons, split-host development and crash recovery.
 
 See the [portfolio](docs/TECHNICAL_PORTFOLIO.md), [sanitized evidence register](docs/EVIDENCE_REGISTER.md), [project-derived lessons](docs/PROJECT_DERIVED_LESSONS.md) and [workload plan](docs/REAL_WORLD_WORKLOADS.md). Private source, architecture, dashboards, commercial assets and raw evidence stay excluded. API client concurrency shares one model; it is not full multi-agent orchestration.
 
 ## Hardware partnerships and independence
 
-Evaluation units, loaners, refurbished/open-box computers, donated systems and appropriate components can support useful studies. A complete previous-generation machine is welcome. No sponsorship, audience statistics or guaranteed coverage is claimed. See [partnerships](PARTNERSHIPS.md), [proposal](outreach/MANUFACTURER_PROPOSAL.md) and [wishlist](docs/HARDWARE_WISHLIST.md). An initial non-confidential GitHub issue is welcome; keep personal contact/shipping/agreement details private.
+Evaluation units, loaners, refurbished/open-box computers, donated systems and appropriate components can support useful studies. A complete previous-generation machine is welcome. No sponsorship, audience statistics or guaranteed coverage is claimed. See [partnerships](PARTNERSHIPS.md), [outreach materials](outreach/README.md) and [wishlist](docs/HARDWARE_WISHLIST.md). An initial non-confidential GitHub issue is welcome; keep personal contact/shipping/agreement details private.
 
 All hardware/financial support is disclosed; factual corrections are welcome, but partners cannot control conclusions or hide unfavorable findings. Read the [editorial policy](EDITORIAL_POLICY.md), [results template](RESULTS_TEMPLATE.md), [publication safeguards](docs/PUBLICATION_CHECKLIST.md) and [roadmap](ROADMAP.md).
 
