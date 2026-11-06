@@ -86,3 +86,5 @@ Review JSON/report/device/model names and disclosure before publication. Nothing
 | Comparison refused | Resolve incompatibility rather than treating runs as equivalent |
 
 Safe tests: `python -m unittest discover -s tests -v`. Local mock sockets must be permitted. Mock platform tests do not certify real Linux/AMD/NVIDIA hardware.
+
+For planned Android builds, workstation comparisons, split-host serving, energy measurement and independent agent trials, see the [workload plan](../docs/REAL_WORLD_WORKLOADS.md). The CLI profiles above cover bounded inference and static grading. Retain the original [CPU baseline](results/baseline-2026-10-20.md), including its failed strict grade, alongside any new comparison.

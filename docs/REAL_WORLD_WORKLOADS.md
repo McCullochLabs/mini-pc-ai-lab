@@ -18,7 +18,7 @@ These are proposed synthetic equivalents inspired by the [evidence register](EVI
 
 Concurrent requests to one model measure serving contention. They do not prove multiple autonomous agents, independent models or coordinated task completion. An agent benchmark additionally needs roles, task state, tool execution, independent acceptance and a complete trace. Prompt processing, generation, load time, client latency and build time must be reported separately. A plausible response that fails correctness is a failed task.
 
-Use fixed prompts, model digest/quantization, input/output limits, warm/cold policy, repeated trials and raw receipts. Keep model quality and speed separate. Record inaccessible telemetry as unavailable, never zero. Network calls require an explicit local target; no production source or private assets enter prompts.
+Use fixed prompts, model digest/quantization, input/output limits, warm/cold policy, repeated trials and raw receipts. Keep model quality and speed separate. Record inaccessible telemetry as unavailable, never zero. The current CLI only accepts HTTP loopback endpoints. A split-host study needs a separately reviewed transport and must keep production source and private assets out of prompts.
 
 ## Creative scope
 
@@ -29,3 +29,14 @@ MischiefToons source was unavailable. No image generation, video generation, con
 The toolkit implements nine narrow static categories: original feature, bug correction, unit-test generation, refactoring, boundary review and four workflow-reliability reviews. These bounded JSON/AST contracts do not execute generated code or establish general semantic correctness. Trusted fixture pass/fail/unsafe samples validate the graders; the broader behavioral/build/mutation studies above remain proposed. One real legacy review request has a recorded failed strict grade; no real nine-task model suite or autonomous orchestration is claimed. See [project-derived lessons](PROJECT_DERIVED_LESSONS.md) for the sanitized rationale and the higher-fidelity backlog.
 
 Consult [benchmark documentation](../benchmarks/README.md) for the actual toolkit commands and supported measurements. The table above is a research backlog; do not infer implementation from its inclusion here.
+
+## Workstation and server experiments
+
+| Proposed experiment | Controlled inputs and observations |
+|---|---|
+| Small coding model on CPU versus GPU | Pin digest, quantization, prompt set, context, threads and output cap. Confirm actual backend placement. Record cold load, resident latency, task grade, tokens/s, system RAM and VRAM. |
+| Builds and model pressure | Use original Gradle and Godot fixtures with clean and incremental build strata, then repeat under bounded inference. Measure compilation, tests, packaging and model request latency separately. |
+| Same-host versus dedicated host | Use the same model and task set. Record client latency and network conditions plus host throughput, memory and placement. Report batch completion and failures at 1/2/4 clients. |
+| Long sessions and independent agent roles | Use isolated developer, test, review and supervision roles with explicit budgets. Inject provider outage and process termination at known points. Verify durable artifacts, stale/duplicate receipt rejection and independent task acceptance after restart. |
+| Document production and editorial QA | Produce an original PDF with deterministic puzzle constraints and independent answer/manifest checks. Inject a render or package mismatch. Measure render time, validation time, semantic rejection and accepted packages per hour. |
+| Power and thermals | Log comparable wall power, energy per accepted task, temperature sensor and placement, sampling interval, ambient conditions and throttling where measurable. |

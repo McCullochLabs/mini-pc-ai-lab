@@ -9,6 +9,7 @@ Evaluate a whole system against an identified workload, not an advertised proces
 | Ryzen AI system | Is the GPU/backend useful for this exact model? | Shared memory and software support; NPU TOPS is not Ollama throughput |
 | Refurbished business desktop | Is upgradeable memory a better value? | Age, noise, power, GPU clearance and supply |
 | GPU workstation | Can dedicated VRAM improve coding inference or creative AI? | Usable VRAM, compatible runtime, total power and cost |
+| Dedicated model host | Does offloading inference preserve development responsiveness under a matched workload? | Network overhead, host utilization, concurrency and energy |
 | Barebones or eGPU system | Does expansion offer a viable upgrade path? | Complete-system cost, interface bottleneck, firmware and driver compatibility |
 
 Do not infer usable GPU acceleration from its presence. Confirm the serving backend and offload allocation during the trial. Memory fit is not proof of acceptable speed. A model file size is not its total runtime memory requirement. Record quality separately from speed and report each workload separately.

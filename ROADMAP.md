@@ -1,21 +1,17 @@
 # Roadmap
 
-## v1.0 operational scope
+## Measured and runnable today
 
-The existing CLI provides environment/model detection, conservative RAM admission, bounded Ollama requests, 1/2/4-client traffic, explicit warm-ups/repeats, system RAM/CPU and optional NVIDIA sampling, v2 results/checkpoints, reports and compatible comparisons. Legacy v1 fixtures remain readable. No additional dashboard, website, orchestration platform or maintenance service is needed.
+The Python CLI supports environment and Ollama detection, conservative RAM admission, bounded requests, configurable warm-ups and repetitions, system telemetry, checkpointed results and compatible comparisons. The static suite contains 13 original cases across nine categories. The [single measured CPU request](benchmarks/results/baseline-2026-10-20.md) completed and failed strict task grading. See the [operating guide](benchmarks/README.md) and [release scope](docs/V1_RELEASE.md).
 
-A first single-request Windows CPU smoke observation is published, including failed task quality. See [release scope](docs/V1_RELEASE.md) and [actual result](benchmarks/results/baseline-2026-10-20.md).
+## Establish repeatable workstation baselines
 
-## Project-informed extension
+Acquire or borrow a [tier 1 system](docs/HARDWARE_WISHLIST.md), document its configuration and rerun the narrow baseline under fixed conditions. Measure cold and resident runs and then real 1/2/4-client serving under controlled memory pressure. Build an original Gradle/Godot test fixture with separate build, test and packaging timings. Add power and thermal readings when measurement is available.
 
-The static suite now includes nine tasks. Four original workflow-review fixtures cover dual release gates, crash-safe draft checkpointing, collision-safe imports and resource cleanup. They are runnable together through `benchmarks/configurations/workflow-reliability.json`. The [sanitized lessons and priorities](docs/PROJECT_DERIVED_LESSONS.md) explain why these were selected without copying private project material.
+## Validate acceleration and split-host operation
 
-## Routine benchmarking and hardware acquisition
+Use a tier 2 candidate to compare CPU and confirmed GPU placement at fixed model settings. Track quality, load time, memory residency, throughput and energy independently. Compare same-host and dedicated-host workflows while reporting server and client timings separately. Consider tier 3 only when the results show capacity or contention limits with a documented workload.
 
-Use the documented protocol on accessible systems with adequate resources. Collect controlled repeated/warm results, then real 1/2/4-client observations when safe. Validate raw records, review metadata/disclosure and publish failures as well as useful outcomes. Compare only compatible protocols and preserve hardware/condition differences.
+## Increase workflow fidelity
 
-## Future evidence-dependent work
-
-Real Linux, AMD/Intel GPU offload, NVIDIA acceleration, thermal/power instrumentation and additional donated/loaned systems need actual access. Model-process memory and backend queue timing need suitable independent instrumentation. Secure dynamic coding execution, Android build/device fixtures, crash recovery, migrations, document-package recovery and full agent orchestration remain separate future projects rather than prerequisites for this static toolkit. Generative media and conventional processing will remain distinct categories.
-
-No automatic outreach, paid infrastructure, model downloading or forced feature expansion is planned. The project now transitions to normal evaluations and hardware acquisition rather than continued broad development.
+Prototype disposable test-generation and structured-output acceptance checks, then test forced interruption, resume, duplicate receipts and bounded fallback. Add an orchestration trial only when independent roles and acceptance can be observed end to end. Require an explicit run budget for extended sessions or heavy workloads. These are proposed studies. See the [workload plan](docs/REAL_WORLD_WORKLOADS.md).

@@ -1,6 +1,6 @@
 # Editorial independence and transparency
 
-Mini PC AI Lab is an independent initiative in its initial development stage. Evaluation hardware does not purchase favorable conclusions. Negative findings will be retained, and manufacturers cannot control technical conclusions or suppress publication of valid limitations.
+McCullochLabs AI Hardware Lab is an independent development initiative. Evaluation hardware does not purchase favorable conclusions. Negative findings will be retained, and manufacturers cannot control technical conclusions or suppress publication of valid limitations.
 
 Every result must disclose donated, loaned, discounted, or purchased hardware; financial relationships; affiliate relationships if any; and who owns the equipment. Record return dates, shipping costs, damage responsibilities, data wiping, and other obligations before accepting a loan. Agreements require explicit owner approval.
 

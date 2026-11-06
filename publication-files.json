@@ -47,5 +47,11 @@
   "tests/test_hardware.py",
   "tests/test_lab.py",
   "tests/test_v2.py",
-  "docs/LOCAL_AUDIT_2026-10-25.md"
+  "docs/LOCAL_AUDIT_2026-10-25.md",
+  "docs/REPOSITORY_RENAME.md",
+  "outreach/README.md",
+  "outreach/MANUFACTURER_LOANER.md",
+  "outreach/RETIRED_WORKSTATION.md",
+  "outreach/REFURBISHER_RECYCLER.md",
+  "outreach/COMPONENTS.md"
 ]
